@@ -191,7 +191,7 @@ class IndexPage extends React.Component {
     )
     this.state = {
       dependencies: [],
-      toggleDependency: true,
+      toggleDependency: false,
       more: false,
       form: props.data.default,
       ...values,
@@ -233,12 +233,7 @@ class IndexPage extends React.Component {
     console.log(this.state)
     return (
       <Layout>
-        <Meta
-          canonical="canonical"
-          title="title"
-          description="desc"
-          image="image"
-        />
+        <Meta />
         <Block>
           <BlockLeft>Project</BlockLeft>
           <BlockRight>

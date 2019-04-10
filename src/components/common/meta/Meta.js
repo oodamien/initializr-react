@@ -16,13 +16,13 @@ const Meta = () => {
             author
             canonical
             twitter
+            image
           }
         }
       }
     `
   )
   const metaData = site.siteMetadata
-  const image = ""
   return (
     <>
       <Helmet>
@@ -41,8 +41,9 @@ const Meta = () => {
         <meta name="twitter:description" content={metaData.description} />
         <meta name="twitter:url" content={metaData.canonical} />
         <meta name="twitter:site" content={metaData.twitter} />
+        <meta name="twitter:creator" content={metaData.twitter} />
       </Helmet>
-      <ImageMeta image={image} />
+      <ImageMeta image={metaData.image} />
     </>
   )
 }
