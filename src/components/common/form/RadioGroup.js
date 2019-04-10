@@ -1,0 +1,51 @@
+import React from "react"
+import Radio from "./Radio"
+import PropTypes from "prop-types"
+
+class RadioGroup extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { selected: props.selected, options: props.options }
+  }
+
+  onChange = value => {
+    this.setState({
+      selected: value,
+    })
+    if (this.props.onChange) {
+      this.props.onChange(value)
+    }
+  }
+
+  render() {
+    const { options } = this.state
+
+    const allOptions = options.map((option, i) => {
+      return (
+        <Radio
+          key={i}
+          checked={this.state.selected == option.key}
+          text={option.text}
+          value={option.key}
+          handler={this.onChange}
+        />
+      )
+    })
+
+    return <div>{allOptions}</div>
+  }
+}
+
+RadioGroup.propTypes = {
+  name: PropTypes.string.isRequired,
+  selected: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+    })
+  ),
+  onChange: PropTypes.func,
+}
+
+export default RadioGroup
