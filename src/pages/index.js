@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
 import { useStaticQuery, graphql } from "gatsby"
-import styled, { css } from "styled-components"
 
 import get from "lodash.get"
 import set from "lodash.set"
@@ -12,171 +11,8 @@ import { Typehead } from "../components/common/typehead"
 import { CheckboxList } from "../components/common/checkbox-list"
 import { Meta } from "../components/common/meta"
 
-const Block = styled.div`
-  display: flex;
-`
-
-const BlockLeft = styled.div`
-  font-weight: 700;
-  width: 280px;
-  text-align: right;
-  padding: 8px 32px 8px 0;
-  flex: 280px 0 0;
-  position: relative;
-  
-  ${({ nopadding }) =>
-    nopadding &&
-    css`
-      padding: 0;
-      margin: 0;
-      margin-left: 4px;
-      flex: 312px 0 0;
-      background: #f7f7f7;
-    `}
-  }
-`
-
-const BlockRight = styled.div`
-  padding: 8px 0 8px 32px;
-  flex: 2;
-  max-width: 600px;
-  
-  ${({ nopadding }) =>
-    nopadding &&
-    css`
-      padding: 0;
-      margin-left: 28px;
-    `}
-  }
-`
-
-const BlockRightInput = styled(BlockRight)`
-  max-width: 500px;
-`
-
-const BlockDependencies = styled.div`
-  padding: 8px 0 8px 32px;
-  flex: 2;
-  max-width: 900px;
-`
-
-const InputStyled = styled.input.attrs({
-  type: "text",
-})`
-  display: block;
-  border: 0;
-  outline: none;
-  border-bottom: 3px solid #ebebeb;
-  line-height: 16px;
-  font-family: Karla, sans-serif;
-  font-size: 15px;
-  box-sizing: border-box;
-  background-clip: padding-box;
-  width: 100%;
-  padding: 0.35rem 0 0.55rem;
-  border-radius: 0;
-  background: #fff;
-  &:focus {
-    border-color: #6db33f;
-  }
-`
-
-const Label = styled.label`
-  color: #706c69;
-  font-size: 14px;
-  font-weight: lighter;
-`
-
-const Control = styled.div`
-  line-height: 16px;
-  padding-top: 8px;
-  & + & {
-    padding-top: 16px;
-  }
-`
-
-const Colset = styled.div`
-  display: flex;
-  min-height: 300px;
-`
-
-const Column = styled.div`
-  flex: 1;
-  & + & {
-    padding-left: 20px;
-  }
-`
-
-const BlockSubmit = styled.div`
-  position: sticky;
-  bottom: 0px;
-  background: red;
-  width: 920px;
-  background: white;
-  height: 36px;
-  padding: 24px 0 28px;
-  border-top: 1px solid #ccc;
-`
-
-const Button = styled.button`
-  color: #222;
-  padding: 0px 12px;
-
-  border: 2px solid #e4e4e4;
-  background-color: #fff;
-  border-radius: 4px;
-  font-family: Karla, sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  cursor: pointer;
-  line-height: 32px;
-  :hover {
-    border: 2px solid #d0d0d0;
-    background-color: #FFF;
-  }
-  
-  ${({ primary }) =>
-    primary &&
-    css`
-      padding: 4px 32px;
-      color: #fff;
-      border: 2px solid #6db33f;
-      background-color: #6db33f;
-      :hover {
-        border: 2px solid #5fa82f;
-        background-color: #5fa82f;
-      }
-    `}
-  }
-`
-
-const MoreBlock = styled.div`
-  height: 50px;
-  line-height: 16px;
-  padding-top: 8px;
-  margin-top: 12px;
-  & div.wrap {
-    border-bottom: 2px dotted #e4e4e4;
-    height: 18px;
-    text-align: center;
-  }
-`
-
-const SeeAll = styled.span`
-  position: absolute;
-  top: 28px;
-  right: 35px;
-  font-weight: 400;
-  width: 100px;
-  cursor: pointer;
-  text-decoration: underline;
-  color: #097dff;
-`
-
-const BlockSticky = styled.div`
-  position: sticky;
-  bottom: 0px;
-`
+import querystring from 'querystring';
+import FileSaver from 'file-saver';
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -186,7 +22,7 @@ class IndexPage extends React.Component {
     set(values, "meta.name", get(data, "default.meta.artifact"))
     set(
       values,
-      "meta.package",
+      "meta.packageName",
       `${get(data, "default.meta.group")}.${get(data, "default.meta.artifact")}`
     )
     this.state = {
@@ -225,206 +61,242 @@ class IndexPage extends React.Component {
     meta[prop] = value
     this.setState({ meta: meta })
   }
+  
+  onSubmit = (event) => {
+    event.preventDefault()
+    const { project, language, boot, meta, dependencies } = this.state
+    const url = 'http://localhost:8080/starter.zip'
+    const params = querystring.stringify({ 
+      type: project,
+      language: language,
+      bootVersion: boot,
+      baseDir: meta.artifact,
+      groupId: meta.group,
+      artifactId: meta.artifact,
+      name: meta.name,
+      description: meta.description,
+      packageName: meta.packageName,
+      packaging: meta.packaging,
+      javaVersion: meta.java
+    });
+    const paramsDependencies = dependencies.map(dep => `&style=${dep.id}`).join('')
+    fetch(`${url}?${params}${paramsDependencies}`, { method: 'GET' })
+      .then(function(response) {
+        if (response.status === 200) {
+          return response.blob()
+        }
+        // Handle Error
+        console.log(response)
+      }, function(error) {
+      // Handle Error
+        console.log(error)
+      })
+      .then(function(blob) {
+          const fileName = `${meta.artifact}.zip`
+          FileSaver.saveAs(blob, fileName);
+      })
+  }
 
   render() {
     const data = this.props.data.allContentJson.edges[0].node
     let values = this.state.values
     let reduceMode = true
-    console.log(this.state)
     return (
       <Layout>
         <Meta />
-        <Block>
-          <BlockLeft>Project</BlockLeft>
-          <BlockRight>
-            <RadioGroup
-              name="project"
-              selected={this.state.project}
-              options={data.project}
-              onChange={value => {
-                this.setState({ project: value })
-              }}
-            />
-          </BlockRight>
-        </Block>
-        <Block>
-          <BlockLeft>Language</BlockLeft>
-          <BlockRight>
-            <RadioGroup
-              name="language"
-              selected={this.state.language}
-              onChange={value => {
-                this.setState({ language: value })
-              }}
-              options={data.language}
-            />
-          </BlockRight>
-        </Block>
-        <Block>
-          <BlockLeft>Spring Boot</BlockLeft>
-          <BlockRight>
-            <RadioGroup
-              name="boot"
-              selected={this.state.boot}
-              options={data.boot}
-              onChange={value => {
-                this.setState({ boot: value })
-              }}
-            />
-          </BlockRight>
-        </Block>
-        <Block>
-          <BlockLeft>Project Metadata</BlockLeft>
-          <BlockRightInput>
-            <Control>
-              <Label>Group</Label>
-              <InputStyled
-                defaultValue={this.state.meta.group}
+        <form onSubmit={this.onSubmit}>
+          <div className="colset">
+            <div className="left">Project</div>
+            <div className="right">
+              <RadioGroup
+                name="project"
+                selected={this.state.project}
+                options={data.project}
                 onChange={value => {
-                  this.updateMetaState("group", event.target.value)
+                  this.setState({ project: value })
                 }}
               />
-            </Control>
-            <Control>
-              <Label>Artifact</Label>
-              <InputStyled
-                defaultValue={this.state.meta.artifact}
+            </div>
+          </div>
+          <div className="colset">
+            <div className="left">Language</div>
+            <div className="right">
+              <RadioGroup
+                name="language"
+                selected={this.state.language}
                 onChange={value => {
-                  this.updateMetaState("artifact", event.target.value)
+                  this.setState({ language: value })
+                }}
+                options={data.language}
+              />
+            </div>
+          </div>
+          <div className="colset">
+            <div className="left">Spring Boot</div>
+            <div className="right">
+              <RadioGroup
+                name="boot"
+                selected={this.state.boot}
+                options={data.boot}
+                onChange={value => {
+                  this.setState({ boot: value })
                 }}
               />
-            </Control>
-            {this.state.more && (
-              <div>
-                <Control>
-                  <Label>Name</Label>
-                  <InputStyled
-                    defaultValue={this.state.meta.name}
-                    onChange={value => {
-                      this.updateMetaState("name", event.target.value)
-                    }}
-                  />
-                </Control>
-                <Control>
-                  <Label>Description</Label>
-                  <InputStyled
-                    defaultValue={this.state.meta.description}
-                    onChange={value => {
-                      this.updateMetaState("description", event.target.value)
-                    }}
-                  />
-                </Control>
-                <Control>
-                  <Label>Package Name</Label>
-                  <InputStyled
-                    defaultValue={this.state.meta.package}
-                    onChange={value => {
-                      this.updateMetaState("package", event.target.value)
-                    }}
-                  />
-                </Control>
-                <Control>
-                  <Label>Packaging</Label>
-                  <div>
-                    <RadioGroup
-                      name="packaging"
-                      selected={this.state.meta.packaging}
-                      options={data.meta.packaging}
+            </div>
+          </div>
+          <div className="colset">
+            <div className="left">Project Metadata</div>
+            <div className="right right-md">
+              <div className="control">
+                <label>Group</label>
+                <input type="text" className="control-input"
+                  defaultValue={this.state.meta.group}
+                  onChange={value => {
+                    this.updateMetaState("group", event.target.value)
+                  }}
+                />
+              </div>
+              <div className="control">
+                <label>Artifact</label>
+                <input type="text" className="control-input"
+                  defaultValue={this.state.meta.artifact}
+                  onChange={value => {
+                    this.updateMetaState("artifact", event.target.value)
+                  }}
+                />
+              </div>
+              {this.state.more && (
+                <div>
+                  <div className="control">
+                    <label>Name</label>
+                    <input type="text" className="control-input"
+                      defaultValue={this.state.meta.name}
                       onChange={value => {
-                        this.updateMetaState("packaging", value)
+                        this.updateMetaState("name", event.target.value)
                       }}
                     />
                   </div>
-                </Control>
-                <Control>
-                  <Label>Java</Label>
-                  <div>
-                    <RadioGroup
-                      name="java"
-                      selected={this.state.meta.java}
-                      options={data.meta.java}
+                  <div className="control">
+                    <label>Description</label>
+                    <input type="text" className="control-input"
+                      defaultValue={this.state.meta.description}
                       onChange={value => {
-                        this.updateMetaState("java", value)
+                        this.updateMetaState("description", event.target.value)
                       }}
                     />
                   </div>
-                </Control>
-              </div>
-            )}
-            <MoreBlock>
-              <div className="wrap">
-                {!this.state.more ? (
-                  <Button onClick={this.toggle}>More options</Button>
-                ) : (
-                  <Button onClick={this.toggle}>Fewer options</Button>
-                )}
-              </div>
-            </MoreBlock>
-          </BlockRightInput>
-        </Block>
-        {!this.state.toggleDependency ? (
-          <Block>
-            <BlockLeft>
-              Dependencies
-              <SeeAll onClick={this.toggleDependency}>View all</SeeAll>
-            </BlockLeft>
-            <BlockDependencies>
-              <Colset>
-                <Column>
-                  <Label>Search dependencies to add</Label>
-                  <Typehead
-                    boot={this.state.boot}
-                    add={this.dependencyAdd}
-                    options={data.dependencies}
-                    exclude={this.state.dependencies}
-                  />
-                </Column>
-                <Column>
-                  {this.state.dependencies.length > 0 && (
-                    <>
-                      Selected dependencies
-                      <List
-                        boot={this.state.boot}
-                        remove={this.dependencyRemove}
-                        list={this.state.dependencies}
+                  <div className="control">
+                    <label>Package Name</label>
+                    <input type="text" className="control-input"
+                      defaultValue={this.state.meta.packageName}
+                      onChange={value => {
+                        this.updateMetaState("packageName", event.target.value)
+                      }}
+                    />
+                  </div>
+                  <div className="control">
+                    <label>Packaging</label>
+                    <div>
+                      <RadioGroup
+                        name="packaging"
+                        selected={this.state.meta.packaging}
+                        options={data.meta.packaging}
+                        onChange={value => {
+                          this.updateMetaState("packaging", value)
+                        }}
                       />
-                    </>
+                    </div>
+                  </div>
+                  <div className="control">
+                    <label>Java</label>
+                    <div>
+                      <RadioGroup
+                        name="java"
+                        selected={this.state.meta.java}
+                        options={data.meta.java}
+                        onChange={value => {
+                          this.updateMetaState("java", value)
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="more">
+                <div className="wrap">
+                  {!this.state.more ? (
+                    <button className="button" type="button" onClick={this.toggle}>More options</button>
+                  ) : (
+                    <button className="button" type="button" onClick={this.toggle}>Fewer options</button>
                   )}
-                </Column>
-              </Colset>
-            </BlockDependencies>
-          </Block>
-        ) : (
-          <Block>
-            <BlockLeft>
-              Dependencies
-              <SeeAll onClick={this.toggleDependency}>Search</SeeAll>
-            </BlockLeft>
-            <BlockDependencies>
-              <CheckboxList
-                boot={this.state.boot}
-                add={this.dependencyAdd}
-                remove={this.dependencyRemove}
-                list={data.dependencies}
-                checked={this.state.dependencies}
-              />
-            </BlockDependencies>
-          </Block>
-        )}
-        <BlockSticky>
-          <Block>
-            <BlockLeft nopadding>
-              <Footer />
-            </BlockLeft>
-            <BlockRight nopadding>
-              <BlockSubmit>
-                <Button primary type="submit">
-                  Generate the project - ⌘ + ⏎
-                </Button>
-              </BlockSubmit>
-            </BlockRight>
-          </Block>
-        </BlockSticky>
+                </div>
+              </div>
+            </div>
+          </div>
+          {!this.state.toggleDependency ? (
+            <div className="colset">
+              <div className="left">
+                Dependencies
+                <a className="see-all" onClick={this.toggleDependency}>View all</a>
+              </div>
+              <div className="dependencies">
+                <div className="colset-2">
+                  <div className="column">
+                    <label>Search dependencies to add</label>
+                    <Typehead
+                      boot={this.state.boot}
+                      add={this.dependencyAdd}
+                      options={data.dependencies}
+                      exclude={this.state.dependencies}
+                    />
+                  </div>
+                  <div className="column">
+                    {this.state.dependencies.length > 0 && (
+                      <>
+                        Selected dependencies
+                        <List
+                          boot={this.state.boot}
+                          remove={this.dependencyRemove}
+                          list={this.state.dependencies}
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="colset">
+              <div className="left">
+                Dependencies
+                <a className="see-all" onClick={this.toggleDependency}>Search</a>
+              </div>
+              <div className="dependencies">
+                <CheckboxList
+                  boot={this.state.boot}
+                  add={this.dependencyAdd}
+                  remove={this.dependencyRemove}
+                  list={data.dependencies}
+                  checked={this.state.dependencies}
+                />
+              </div>
+            </div>
+          )}
+          <div className="sticky">
+            <div className="colset">
+              <div className="left nopadding">
+                <Footer />
+              </div>
+              <div className="right nopadding">
+                <div className="submit">
+                  <button className="button primary" type="submit">
+                    Generate the project - ⌘ + ⏎
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </Layout>
     )
   }

@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 
 const IconTimes = ({ className }) => (
   <svg
@@ -19,7 +18,4 @@ const IconTimes = ({ className }) => (
   </svg>
 )
 
-export default styled(IconTimes)`
-  color: #000;
-  width: 14px;
-`
+export default IconTimes

@@ -1,60 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled, { css } from "styled-components"
 import { IconPlus } from "./../icons"
 import CompareVersion from "./../../utils/version-compare"
-
-const Dependencies = styled.div``
-
-const Icon = styled(IconPlus)`
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  margin-top: -7px;
-  display: none;
-`
-
-const DependencyItem = styled.div`
-  display: block;
-  border: 2px solid #f7f7f7;
-  background: #f7f7f7;
-  line-height: 24px;
-  padding: 8px 40px 8px 16px;
-  margin: 8px 0;
-  border-radius: 4px;
-  position: relative;
-  cursor: pointer;
-  
-  ${({ selected }) =>
-    selected &&
-    css`
-      background: #e7f1f4;
-      border-color: #e7f1f4;
-      ${Icon} {
-        display: block;
-      }
-    `}
-    
-  ${({ invalid }) =>
-    invalid &&
-    css`
-      background: #ffe2e2;
-      border-color: #ffe2e2;
-      cursor: not-allowed;
-    `}
-  }
-`
-
-const Title = styled.div`
-  font-weight: bold;
-`
-const Description = styled.div`
-  color: rgba(0, 0, 0, 0.6);
-`
-const Warning = styled.div`
-  font-weight: bold;
-  color: #f30808;
-`
 
 class ListSearch extends React.Component {
   constructor(props) {
@@ -79,13 +26,13 @@ class ListSearch extends React.Component {
       dependencies = dependencies.slice(0, 5)
     }
     return (
-      <Dependencies>
+      <div className="dependencies-list">
         {dependencies.map((dependency, index) => {
           const valid = dependency.versionRange
             ? CompareVersion(this.props.boot, dependency.versionRange)
             : true
           return (
-            <DependencyItem
+            <div className={`dependency-item dependency-item-gray ${!valid ? 'invalid' : ''}  ${this.props.selected === index ? 'selected' : ''}`}
               key={`item${dependency.id}`}
               invalid={!valid}
               selected={this.props.selected === index}
@@ -102,22 +49,22 @@ class ListSearch extends React.Component {
               }}
               key={dependency.id}
             >
-              <Title key={`item${dependency.id}`}>
+              <div className="title" key={`item${dependency.id}`}>
                 {dependency.name} <span>{dependency.group}</span>
-              </Title>
-              <Description key={`description{dependency.id}`}>
+              </div>
+              <div className="description" key={`description{dependency.id}`}>
                 {dependency.description}
-              </Description>
-              <Icon key={`icon${dependency.id}`} />
+              </div>
+              <IconPlus key={`icon${dependency.id}`} />
               {!valid && (
-                <Warning key={`warning${dependency.id}`}>
+                <div className="warning" key={`warning${dependency.id}`}>
                   Requires Spring Boot {dependency.versionRequirement}.
-                </Warning>
+                </div>
               )}
-            </DependencyItem>
+            </div>
           )
         })}
-      </Dependencies>
+      </div>
     )
   }
 }

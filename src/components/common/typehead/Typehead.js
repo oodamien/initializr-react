@@ -1,44 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "styled-components"
 
 import ListSearch from "./ListSearch"
 import CompareVersion from "./../../utils/version-compare"
 
 import * as JsSearch from "js-search"
-
-const InputStyled = styled.input.attrs({
-  type: "text",
-})`
-  display: block;
-  border: 0;
-  outline: none;
-  border-bottom: 3px solid #ebebeb;
-  line-height: 16px;
-  font-family: Karla, sans-serif;
-  font-size: 15px;
-  box-sizing: border-box;
-  background-clip: padding-box;
-  width: 100%;
-  padding: 0.35rem 0 0.55rem;
-  border-radius: 0;
-  background: #fff;
-  &:focus {
-    border-color: #6db33f;
-  }
-`
-
-const DependencyItem = styled.div`
-  display: block;
-  border: 2px solid #f7f7f7;
-  background: #f7f7f7;
-  line-height: 24px;
-  padding: 8px 40px 8px 16px;
-  margin: 8px 0;
-  border-radius: 4px;
-  position: relative;
-  cursor: pointer;
-`
 
 class Typehead extends React.Component {
   search = null
@@ -142,8 +108,7 @@ class Typehead extends React.Component {
     }
     return (
       <>
-        <div>
-          <InputStyled
+          <input type="text" className="control-input"
             placeholder="Web, Security, JPA, Actuator, Devtools..."
             value={this.state.search}
             onFocus={this.onFocus}
@@ -156,7 +121,6 @@ class Typehead extends React.Component {
               this.onKeyPress(e, dependencies)
             }}
           />
-        </div>
         <ListSearch
           boot={this.props.boot}
           dependencies={dependencies}

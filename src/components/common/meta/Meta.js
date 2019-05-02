@@ -48,20 +48,4 @@ const Meta = () => {
   )
 }
 
-Meta.propTypes = {
-  data: PropTypes.shape({
-    site: PropTypes.shape({
-      siteMetadata: PropTypes.shape({
-        siteUrl: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-  }).isRequired,
-  canonical: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  type: PropTypes.oneOf([`website`, `series`]).isRequired,
-}
-
 export default Meta

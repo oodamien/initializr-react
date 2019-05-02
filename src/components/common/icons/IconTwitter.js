@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 
 const IconTwitter = ({ className }) => (
   <svg
@@ -19,7 +18,4 @@ const IconTwitter = ({ className }) => (
   </svg>
 )
 
-export default styled(IconTwitter)`
-  color: #000;
-  width: 16px;
-`
+export default IconTwitter

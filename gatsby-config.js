@@ -42,8 +42,8 @@ module.exports = {
       },
     },
     `gatsby-transformer-json`,
+    `gatsby-plugin-sass`,
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-styled-components`,
     `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,

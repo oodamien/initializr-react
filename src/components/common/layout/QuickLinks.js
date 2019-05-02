@@ -1,105 +1,8 @@
 import { Link } from "gatsby"
 import React from "react"
 import Logo from "./Logo"
-import styled from "styled-components"
 
 import { IconGithub, IconTwitter, IconSpring, IconCaretDown } from "../icons"
-
-const Nav = styled.ul`
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  color: #ccc;
-  width: 320px;
-  text-align: right;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-`
-
-const NavItem = styled.li`
-  display: inline;
-`
-
-const NavLink = styled(Link)`
-  margin: 0 12px;
-  padding-left: 24px;
-  padding-right: 4px;
-  text-decoration: none;
-  position: relative;
-  color: #000;
-  svg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 18px;
-  }
-  svg.caret {
-    position: relative;
-    width: 10px;
-    top: 3px;
-    margin-left: 10px;
-  }
-  :hover {
-    color: #6db33f;
-    svg {
-      color: #6db33f;
-    }
-  }
-`
-
-const NavHelp = styled.a`
-  margin: 0 12px;
-  padding-left: 24px;
-  padding-right: 4px;
-  text-decoration: none;
-  position: relative;
-  color: #000;
-  cursor: pointer;
-  svg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 18px;
-  }
-  svg.caret {
-    position: relative;
-    width: 10px;
-    top: 3px;
-    margin-left: 10px;
-  }
-  :hover {
-    color: #6db33f;
-    svg {
-      color: #6db33f;
-    }
-  }
-`
-
-const DropdownMenu = styled.div`
-  z-index: 999;
-  position: absolute;
-  top: 34px;
-  right: 0;
-  background: white;
-  width: 200px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  text-align: left;
-`
-const MenuLink = styled.a`
-  display: block;
-  padding: 4px 12px;
-  margin: 0;
-  position: relative;
-  color: #000;
-  text-decoration: none;
-  :hover {
-    background: #e7f1f4;
-  }
-`
 
 class QuickLinks extends React.Component {
   constructor(props) {
@@ -133,21 +36,22 @@ class QuickLinks extends React.Component {
 
   render() {
     return (
-      <Nav>
-        <NavItem>
-          <NavLink to="/">
+      <ul className="quick-links">
+        <li>
+          <Link to="/">
             <IconGithub />
             Github
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/">
+          </Link>
+        </li>
+        <li>
+          <Link to="/">
             <IconTwitter />
             Twitter
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavHelp
+          </Link>
+        </li>
+        <li>
+          <a
+            className="dropdown"
             onClick={() => {
               this.setState({ help: !this.state.help })
             }}
@@ -155,11 +59,11 @@ class QuickLinks extends React.Component {
             <IconSpring />
             Help
             <IconCaretDown className="caret" />
-          </NavHelp>
+          </a>
           {this.state.help && (
-            <DropdownMenu class="dropdown-menu" ref={this.setWrapperRef}>
+            <ul className="dropdown-menu" ref={this.setWrapperRef}>
               <li>
-                <MenuLink
+                <a
                   id="ql-help-projects"
                   target="_blank"
                   href="https://spring.io/projects"
@@ -168,10 +72,10 @@ class QuickLinks extends React.Component {
                   }}
                 >
                   Spring Projects
-                </MenuLink>
+                </a>
               </li>
               <li>
-                <MenuLink
+                <a
                   id="ql-help-guides"
                   target="_blank"
                   href="https://spring.io/guides"
@@ -180,12 +84,12 @@ class QuickLinks extends React.Component {
                   }}
                 >
                   Spring Guides
-                </MenuLink>
+                </a>
               </li>
-            </DropdownMenu>
+            </ul>
           )}
-        </NavItem>
-      </Nav>
+        </li>
+      </ul>
     )
   }
 }

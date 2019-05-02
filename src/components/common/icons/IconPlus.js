@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 
 const IconPlus = ({ className }) => (
   <svg
@@ -19,7 +18,4 @@ const IconPlus = ({ className }) => (
   </svg>
 )
 
-export default styled(IconPlus)`
-  color: #000;
-  width: 14px;
-`
+export default IconPlus

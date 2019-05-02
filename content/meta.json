@@ -1,11 +1,23 @@
 {
+"default": {
+  "project": "maven-project",
+  "language": "java",
+  "boot": "2.1.4.RELEASE",
+  "meta": {
+    "group": "com.example",
+    "artifact": "demo",
+    "description": "Demo project for Spring Boot",
+    "packaging": "jar",
+    "java": "1.8"
+  }
+},
   "project": [
     {
-      "key": "maven",
+      "key": "maven-project",
       "text": "Maven Project"
     },
     {
-      "key": "gradle",
+      "key": "gradle-project",
       "text": "Gradle Project"
     }
   ],
@@ -25,60 +37,48 @@
   ],
   "boot": [
     {
-      "key": "2.2.0.M1",
-      "text": "2.2.0 M1"
+      "key": "2.2.0.M2",
+      "text": "2.2.0 M2"
     },
     {
       "key": "2.2.0 (SNAPSHOT)",
       "text": "2.2.0 (SNAPSHOT)"
     },
     {
-      "key": "2.1.4 (SNAPSHOT)",
-      "text": "2.1.4 (SNAPSHOT)"
+      "key": "2.1.5 (SNAPSHOT)",
+      "text": "2.1.5 (SNAPSHOT)"
     },
     {
-      "key": "2.1.3",
-      "text": "2.1.3"
+      "key": "2.1.4.RELEASE",
+      "text": "2.1.4"
     },
     {
-      "key": "1.5.19",
-      "text": "1.5.19"
+      "key": "1.5.20",
+      "text": "1.5.20"
     }
   ],
-  "default": {
-    "project": "maven",
-    "language": "java",
-    "boot": "2.1.3",
-    "meta": {
-      "group": "com.example",
-      "artifact": "demo",
-      "description": "Demo project for Spring Boot",
-      "packaging": "Jar",
-      "java": "8"
-    }
-  },
   "meta": {
     "packaging": [
       {
-        "key": "Jar",
+        "key": "jar",
         "text": "Jar"          
       },
       {
-        "key": "War",
+        "key": "war",
         "text": "War"          
       }
     ],
     "java": [
       {
-        "key": "12",
+        "key": "1.12",
         "text": "12"          
       },
       {
-        "key": "11",
+        "key": "1.11",
         "text": "11"          
       },
       {
-        "key": "8",
+        "key": "1.8",
         "text": "8"          
       }
     ]
@@ -114,7 +114,7 @@
       "name": "Session",
       "group": "Core",
       "weight": 0,
-      "description": "API and implementations for managing a userâ€™s session information"
+      "description": "API and implementations for managing a user session information"
     },
     {
       "id": "cache",

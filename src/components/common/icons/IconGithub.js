@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 
 const IconGithub = ({ className }) => (
   <svg
@@ -18,7 +17,4 @@ const IconGithub = ({ className }) => (
   </svg>
 )
 
-export default styled(IconGithub)`
-  color: #000;
-  width: 16px;
-`
+export default IconGithub

@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 
 const IconSpring = ({ className }) => (
   <svg className={className} viewBox="0 0 248.7 248.38">
@@ -15,7 +14,4 @@ const IconSpring = ({ className }) => (
   </svg>
 )
 
-export default styled(IconSpring)`
-  color: #000;
-  width: 14px;
-`
+export default IconSpring

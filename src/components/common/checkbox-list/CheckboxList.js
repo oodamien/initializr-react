@@ -1,70 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled, { css } from "styled-components"
 import { IconPlus } from "./../icons"
 import CompareVersion from "./../../utils/version-compare"
-
-const Groups = styled.div`
-  padding: 0 0 16px 0;
-  margin-top: -27px;
-`
-
-const Group = styled.div`
-  line-height: 1.4rem;
-  position: relative;
-  border-bottom: 1px solid #eee;
-  padding: 16px 0 16px 0;
-`
-
-const GroupTitle = styled.div`
-  font-weight: bold;
-  color: #6db33f;
-  margin-top: 16px;
-  position: sticky;
-  width: 150px;
-  top: 10px;
-  float: left;
-`
-
-const GroupLinks = styled.div`
-  padding-left: 160px;
-`
-
-const GroupLink = styled.label`
-  display: block;
-  position: relative;
-  cursor: pointer;
-  padding: 8px 40px 8px 35px;
-  margin: 8px 0;
-  border-radius: 4px;
-  :hover {
-    background: #f7f7f7;
-  }
-  span {
-    color: rgba(0, 0, 0, 0.6);
-  }
-  
-  ${({ invalid }) =>
-    invalid &&
-    css`
-      cursor: not-allowed;
-      :hover {
-        background: #fff;
-      }
-    `}
-  }
-`
-
-const GroupInput = styled.input`
-  display: inline-block;
-  margin-left: -22px;
-  margin-right: 10px;
-`
-
-const Warning = styled.div`
-  font-weight: bold;
-  color: #f30808;
-`
 
 class CheckboxList extends React.Component {
   constructor(props) {
@@ -111,14 +48,15 @@ class CheckboxList extends React.Component {
       select[item.id] = true
     })
     return (
-      <Groups>
+      <div className="groups">
         {grouped.map(group => (
-          <Group key={group.group}>
-            <GroupTitle key={`title${group.group}`}>{group.group}</GroupTitle>
-            <GroupLinks key={`links${group.group}`}>
+          <div className="group" key={group.group}>
+            <div className="group-title" key={`title${group.group}`}>{group.group}</div>
+            <div className="group-items" key={`links${group.group}`}>
               {group.children.map(dep => (
-                <GroupLink invalid={!dep.valid} key={dep.id}>
-                  <GroupInput
+                <label className={`${!dep.valid ? 'invalid' : ''} ${select[dep.id] === true ? 'checked' : ''}`} key={dep.id}>
+                  <input
+                    type="checkbox"
                     value={dep.id}
                     key={`ck${dep.id}`}
                     checked={select[dep.id] === true}
@@ -129,16 +67,16 @@ class CheckboxList extends React.Component {
                   <strong>{dep.name}</strong>:{` `}
                   <span>{dep.description}</span>
                   {!dep.valid && (
-                    <Warning key={`warning${dep.id}`}>
+                    <div className="warning" key={`warning${dep.id}`}>
                       Requires Spring Boot {dep.versionRequirement}.
-                    </Warning>
+                    </div>
                   )}
-                </GroupLink>
+                </label>
               ))}
-            </GroupLinks>
-          </Group>
+            </div>
+          </div>
         ))}
-      </Groups>
+      </div>
     )
   }
 }

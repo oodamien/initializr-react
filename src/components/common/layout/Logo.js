@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 
 const Logo = ({ className }) => {
   return (
@@ -44,7 +43,4 @@ const Logo = ({ className }) => {
   )
 }
 
-export default styled(Logo)`
-  color: #00a79d;
-  width: 50px;
-`
+export default Logo
