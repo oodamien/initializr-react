@@ -1,6 +1,4 @@
 import React from 'react'
-import { Link } from 'gatsby'
-
 import { IconCaretDown, IconGithub, IconSpring, IconTwitter } from '../icons'
 
 class QuickLinks extends React.Component {
@@ -37,21 +35,32 @@ class QuickLinks extends React.Component {
     return (
       <ul className='quick-links'>
         <li>
-          <Link to='/'>
+          <a
+            href='https://github.com/spring-io/initializr'
+            rel='noreferrer noopener'
+            target='_blank'
+            tabIndex='-1'
+          >
             <IconGithub />
             Github
-          </Link>
+          </a>
         </li>
         <li>
-          <Link to='/'>
+          <a
+            href='https://twitter.com/springboot'
+            rel='noreferrer noopener'
+            target='_blank'
+            tabIndex='-1'
+          >
             <IconTwitter />
             Twitter
-          </Link>
+          </a>
         </li>
         <li>
           <a
             href='/'
             className='dropdown'
+            tabIndex='-1'
             onClick={e => {
               e.preventDefault()
               this.setState({ help: !this.state.help })
@@ -69,6 +78,7 @@ class QuickLinks extends React.Component {
                   target='_blank'
                   rel='noopener noreferrer'
                   href='https://spring.io/projects'
+                  tabIndex='-1'
                   onClick={() => {
                     this.setState({ help: false })
                   }}
@@ -81,6 +91,7 @@ class QuickLinks extends React.Component {
                   id='ql-help-guides'
                   target='_blank'
                   rel='noopener noreferrer'
+                  tabIndex='-1'
                   href='https://spring.io/guides'
                   onClick={() => {
                     this.setState({ help: false })

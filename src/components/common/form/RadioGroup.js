@@ -28,6 +28,7 @@ class RadioGroup extends React.Component {
           checked={this.state.selected === option.key}
           text={option.text}
           value={option.key}
+          disabled={this.props.disabled}
           handler={this.onChange}
         />
       )
@@ -35,6 +36,10 @@ class RadioGroup extends React.Component {
 
     return <div>{allOptions}</div>
   }
+}
+
+RadioGroup.defaultProps = {
+  disabled: false,
 }
 
 RadioGroup.propTypes = {
@@ -47,6 +52,7 @@ RadioGroup.propTypes = {
     })
   ),
   onChange: PropTypes.func,
+  disabled: PropTypes.bool,
 }
 
 export default RadioGroup

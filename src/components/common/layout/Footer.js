@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'gatsby'
 
 const Footer = () => (
   <footer className='footer'>
@@ -8,11 +7,23 @@ const Footer = () => (
       <br />
       start.spring.io is powered by
       <br />
-      <Link href='https://github.com/spring-io/initializr/'>
+      <a
+        tabIndex='-1'
+        target='_blank'
+        rel='noopener noreferrer'
+        href='https://github.com/spring-io/initializr/'
+      >
         Spring Initializr
-      </Link>
+      </a>
       {` `}and{` `}
-      <Link href='https://run.pivotal.io/'>Pivotal Web Services</Link>
+      <a
+        tabIndex='-1'
+        target='_blank'
+        rel='noopener noreferrer'
+        href='https://run.pivotal.io/'
+      >
+        Pivotal Web Services
+      </a>
     </div>
   </footer>
 )

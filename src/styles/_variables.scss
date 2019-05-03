@@ -6,10 +6,10 @@ $spring-color: #222;
 $spring-primary-color: #6db33f;
 $spring-link-color: #6db33f;
 $spring-gray-color: #f8f9f8;
-$spring-dark-color: #98a390;
+$spring-dark-color: #e4e4e4;
 
-$spring-border-color: #cfd4cb;
-$spring-border-color-hover: #bfc5ba;
+$spring-border-color: #e4e4e4;
+$spring-border-color-hover: darken($spring-border-color, 5);
 
 $spring-font-size: 15px;
 $spring-font-size-sm: 14px;

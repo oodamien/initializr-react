@@ -10,6 +10,8 @@ import { Footer, Layout } from '../components/common/layout'
 import { List, RadioGroup } from '../components/common/form'
 import { Meta } from '../components/common/meta'
 import { Typehead } from '../components/common/typehead'
+import { ToastContainer, toast } from 'react-toastify'
+import { GlobalHotKeys } from 'react-hotkeys'
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -28,6 +30,15 @@ class IndexPage extends React.Component {
       more: false,
       form: props.data.default,
       ...values,
+    }
+    this.keyMap = {
+      SUBMIT: ['command+enter', 'ctrl+enter'],
+    }
+    const submit = this.onSubmit
+    this.handlers = {
+      SUBMIT: event => {
+        submit(event)
+      },
     }
   }
 
@@ -87,17 +98,20 @@ class IndexPage extends React.Component {
           if (response.status === 200) {
             return response.blob()
           }
-          // Handle Error
-          console.log(response)
+          return null
         },
         function(error) {
-          // Handle Error
-          console.log(error)
+          return null
         }
       )
       .then(function(blob) {
+        if (!blob) {
+          toast.error('An error occured. The server API is not avalaible.')
+          return
+        }
         const fileName = `${meta.artifact}.zip`
         FileSaver.saveAs(blob, fileName)
+        toast.success('Your project has been generated with success.')
       })
   }
 
@@ -105,7 +119,9 @@ class IndexPage extends React.Component {
     const data = this.props.data.allContentJson.edges[0].node
     return (
       <Layout>
+        <GlobalHotKeys keyMap={this.keyMap} handlers={this.handlers} />
         <Meta />
+        <ToastContainer position='top-center' hideProgressBar />
         <form onSubmit={this.onSubmit}>
           <div className='colset'>
             <div className='left'>Project</div>
@@ -171,69 +187,72 @@ class IndexPage extends React.Component {
                   }}
                 />
               </div>
-              {this.state.more && (
-                <div>
-                  <div className='control'>
-                    <label>Name</label>
-                    <input
-                      type='text'
-                      className='control-input'
-                      defaultValue={this.state.meta.name}
-                      onChange={event => {
-                        this.updateMetaState('name', event.target.value)
+              <div className={`panel ${this.state.more ? 'panel-active' : ''}`}>
+                <div className='control'>
+                  <label>Name</label>
+                  <input
+                    type='text'
+                    className='control-input'
+                    defaultValue={this.state.meta.name}
+                    disabled={!this.state.more}
+                    onChange={event => {
+                      this.updateMetaState('name', event.target.value)
+                    }}
+                  />
+                </div>
+                <div className='control'>
+                  <label>Description</label>
+                  <input
+                    type='text'
+                    className='control-input'
+                    disabled={!this.state.more}
+                    defaultValue={this.state.meta.description}
+                    onChange={event => {
+                      this.updateMetaState('description', event.target.value)
+                    }}
+                  />
+                </div>
+                <div className='control'>
+                  <label>Package Name</label>
+                  <input
+                    type='text'
+                    className='control-input'
+                    disabled={!this.state.more}
+                    defaultValue={this.state.meta.packageName}
+                    onChange={event => {
+                      this.updateMetaState('packageName', event.target.value)
+                    }}
+                  />
+                </div>
+                <div className='control'>
+                  <label>Packaging</label>
+                  <div>
+                    <RadioGroup
+                      name='packaging'
+                      disabled={!this.state.more}
+                      selected={this.state.meta.packaging}
+                      options={data.meta.packaging}
+                      onChange={value => {
+                        this.updateMetaState('packaging', value)
                       }}
                     />
-                  </div>
-                  <div className='control'>
-                    <label>Description</label>
-                    <input
-                      type='text'
-                      className='control-input'
-                      defaultValue={this.state.meta.description}
-                      onChange={event => {
-                        this.updateMetaState('description', event.target.value)
-                      }}
-                    />
-                  </div>
-                  <div className='control'>
-                    <label>Package Name</label>
-                    <input
-                      type='text'
-                      className='control-input'
-                      defaultValue={this.state.meta.packageName}
-                      onChange={event => {
-                        this.updateMetaState('packageName', event.target.value)
-                      }}
-                    />
-                  </div>
-                  <div className='control'>
-                    <label>Packaging</label>
-                    <div>
-                      <RadioGroup
-                        name='packaging'
-                        selected={this.state.meta.packaging}
-                        options={data.meta.packaging}
-                        onChange={value => {
-                          this.updateMetaState('packaging', value)
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className='control'>
-                    <label>Java</label>
-                    <div>
-                      <RadioGroup
-                        name='java'
-                        selected={this.state.meta.java}
-                        options={data.meta.java}
-                        onChange={value => {
-                          this.updateMetaState('java', value)
-                        }}
-                      />
-                    </div>
                   </div>
                 </div>
-              )}
+                <div className='control'>
+                  <label>Java</label>
+                  <div>
+                    <RadioGroup
+                      name='java'
+                      disabled={!this.state.more}
+                      selected={this.state.meta.java}
+                      options={data.meta.java}
+                      onChange={value => {
+                        this.updateMetaState('java', value)
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
               <div className='more'>
                 <div className='wrap'>
                   {!this.state.more ? (
@@ -265,7 +284,7 @@ class IndexPage extends React.Component {
                   View all
                 </a>
               </div>
-              <div className='dependencies'>
+              <div className='dependencies-box'>
                 <div className='colset-2'>
                   <div className='column'>
                     <label>Search dependencies to add</label>
@@ -299,7 +318,7 @@ class IndexPage extends React.Component {
                   Search
                 </a>
               </div>
-              <div className='dependencies'>
+              <div className='dependencies-box'>
                 <CheckboxList
                   boot={this.state.boot}
                   add={this.dependencyAdd}
