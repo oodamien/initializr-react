@@ -1,6 +1,7 @@
-import React from "react"
-import Radio from "./Radio"
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
+import React from 'react'
+
+import Radio from './Radio'
 
 class RadioGroup extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class RadioGroup extends React.Component {
       return (
         <Radio
           key={i}
-          checked={this.state.selected == option.key}
+          checked={this.state.selected === option.key}
           text={option.text}
           value={option.key}
           handler={this.onChange}

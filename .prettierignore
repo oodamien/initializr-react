@@ -4,8 +4,4 @@ node_modules/
 yarn-error.log
 
 public/
-data/
-.idea/
-
-yarn.lock
-package-lock.json
+content/

@@ -1,1 +1,1 @@
-export { default as Typehead } from "./Typehead"
+export { default as Typehead } from './Typehead'

@@ -1,15 +1,15 @@
 const strict_range = /\[(.*),(.*)\]/
 const halfopen_right_range = /\[(.*),(.*)\)/
 const halfopen_left_range = /\((.*),(.*)\]/
-const qualifiers = ["M", "RC", "BUILD-SNAPSHOT", "RELEASE"]
+const qualifiers = ['M', 'RC', 'BUILD-SNAPSHOT', 'RELEASE']
 
 const compare = (a, b) => {
   let result
-  const versionA = a.split(".")
-  const versionB = b.split(".")
+  const versionA = a.split('.')
+  const versionB = b.split('.')
   const parseQualifier = version => {
-    const qual = (version || "").replace(/\d+/g, "")
-    return qualifiers.indexOf(qual) != -1 ? qual : "RELEASE"
+    const qual = (version || '').replace(/\d+/g, '')
+    return qualifiers.indexOf(qual) !== -1 ? qual : 'RELEASE'
   }
   for (let i = 0; i < 3; i++) {
     result = parseInt(versionA[i], 10) - parseInt(versionB[i], 10)
@@ -17,10 +17,9 @@ const compare = (a, b) => {
       return result
     }
   }
-  const aqual = parseQualifier(versionA[3])
-  const bqual = parseQualifier(versionB[3])
-  result = qualifiers.indexOf(aqual) - qualifiers.indexOf(bqual)
-  if (result != 0) {
+  const qualify = version => qualifiers.indexOf(parseQualifier(version))
+  result = qualify(versionA[3]) - qualify(versionB[3])
+  if (result !== 0) {
     return result
   }
   return versionA[3].localeCompare(versionB[3])

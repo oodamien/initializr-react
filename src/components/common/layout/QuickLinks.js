@@ -1,8 +1,7 @@
-import { Link } from "gatsby"
-import React from "react"
-import Logo from "./Logo"
+import React from 'react'
+import { Link } from 'gatsby'
 
-import { IconGithub, IconTwitter, IconSpring, IconCaretDown } from "../icons"
+import { IconCaretDown, IconGithub, IconSpring, IconTwitter } from '../icons'
 
 class QuickLinks extends React.Component {
   constructor(props) {
@@ -17,11 +16,11 @@ class QuickLinks extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside)
+    document.addEventListener('mousedown', this.handleClickOutside)
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside)
+    document.removeEventListener('mousedown', this.handleClickOutside)
   }
 
   setWrapperRef(node) {
@@ -36,37 +35,40 @@ class QuickLinks extends React.Component {
 
   render() {
     return (
-      <ul className="quick-links">
+      <ul className='quick-links'>
         <li>
-          <Link to="/">
+          <Link to='/'>
             <IconGithub />
             Github
           </Link>
         </li>
         <li>
-          <Link to="/">
+          <Link to='/'>
             <IconTwitter />
             Twitter
           </Link>
         </li>
         <li>
           <a
-            className="dropdown"
-            onClick={() => {
+            href='/'
+            className='dropdown'
+            onClick={e => {
+              e.preventDefault()
               this.setState({ help: !this.state.help })
             }}
           >
             <IconSpring />
             Help
-            <IconCaretDown className="caret" />
+            <IconCaretDown className='caret' />
           </a>
           {this.state.help && (
-            <ul className="dropdown-menu" ref={this.setWrapperRef}>
+            <ul className='dropdown-menu' ref={this.setWrapperRef}>
               <li>
                 <a
-                  id="ql-help-projects"
-                  target="_blank"
-                  href="https://spring.io/projects"
+                  id='ql-help-projects'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href='https://spring.io/projects'
                   onClick={() => {
                     this.setState({ help: false })
                   }}
@@ -76,9 +78,10 @@ class QuickLinks extends React.Component {
               </li>
               <li>
                 <a
-                  id="ql-help-guides"
-                  target="_blank"
-                  href="https://spring.io/guides"
+                  id='ql-help-guides'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href='https://spring.io/guides'
                   onClick={() => {
                     this.setState({ help: false })
                   }}

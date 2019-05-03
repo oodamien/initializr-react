@@ -1,13 +1,9 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { IconPlus } from "./../icons"
-import CompareVersion from "./../../utils/version-compare"
+import PropTypes from 'prop-types'
+import React from 'react'
+
+import CompareVersion from './../../utils/version-compare'
 
 class CheckboxList extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   groupByParent = arr => {
     const map = []
     const getParent = (m, name) => {
@@ -48,26 +44,32 @@ class CheckboxList extends React.Component {
       select[item.id] = true
     })
     return (
-      <div className="groups">
+      <div className='groups'>
         {grouped.map(group => (
-          <div className="group" key={group.group}>
-            <div className="group-title" key={`title${group.group}`}>{group.group}</div>
-            <div className="group-items" key={`links${group.group}`}>
+          <div className='group' key={group.group}>
+            <div className='group-title' key={`title${group.group}`}>
+              {group.group}
+            </div>
+            <div className='group-items' key={`links${group.group}`}>
               {group.children.map(dep => (
-                <label className={`${!dep.valid ? 'invalid' : ''} ${select[dep.id] === true ? 'checked' : ''}`} key={dep.id}>
+                <label
+                  className={`${!dep.valid ? 'invalid' : ''} ${
+                    select[dep.id] === true ? 'checked' : ''
+                  }`}
+                  key={dep.id}
+                >
                   <input
-                    type="checkbox"
+                    type='checkbox'
                     value={dep.id}
                     key={`ck${dep.id}`}
                     checked={select[dep.id] === true}
-                    type="checkbox"
                     disabled={!dep.valid}
                     onChange={this.onClick}
                   />
                   <strong>{dep.name}</strong>:{` `}
                   <span>{dep.description}</span>
                   {!dep.valid && (
-                    <div className="warning" key={`warning${dep.id}`}>
+                    <div className='warning' key={`warning${dep.id}`}>
                       Requires Spring Boot {dep.versionRequirement}.
                     </div>
                   )}

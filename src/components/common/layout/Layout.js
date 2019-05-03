@@ -1,8 +1,10 @@
 import '../../../styles/app.scss'
-import React from "react"
-import PropTypes from "prop-types"
-import Header from "./Header"
-import QuickLinks from "./QuickLinks"
+
+import PropTypes from 'prop-types'
+import React from 'react'
+
+import Header from './Header'
+import QuickLinks from './QuickLinks'
 
 const Layout = ({ children }) => (
   <>

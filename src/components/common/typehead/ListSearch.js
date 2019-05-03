@@ -1,13 +1,10 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { IconPlus } from "./../icons"
-import CompareVersion from "./../../utils/version-compare"
+import PropTypes from 'prop-types'
+import React from 'react'
+
+import CompareVersion from './../../utils/version-compare'
+import { IconPlus } from './../icons'
 
 class ListSearch extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   onClick = dependency => {
     this.props.onAdded(dependency)
   }
@@ -26,13 +23,16 @@ class ListSearch extends React.Component {
       dependencies = dependencies.slice(0, 5)
     }
     return (
-      <div className="dependencies-list">
+      <div className='dependencies-list'>
         {dependencies.map((dependency, index) => {
           const valid = dependency.versionRange
             ? CompareVersion(this.props.boot, dependency.versionRange)
             : true
           return (
-            <div className={`dependency-item dependency-item-gray ${!valid ? 'invalid' : ''}  ${this.props.selected === index ? 'selected' : ''}`}
+            <div
+              className={`dependency-item dependency-item-gray ${
+                !valid ? 'invalid' : ''
+              }  ${this.props.selected === index ? 'selected' : ''}`}
               key={`item${dependency.id}`}
               invalid={!valid}
               selected={this.props.selected === index}
@@ -47,17 +47,16 @@ class ListSearch extends React.Component {
               onMouseLeave={() => {
                 this.onMouseLeave(index)
               }}
-              key={dependency.id}
             >
-              <div className="title" key={`item${dependency.id}`}>
+              <div className='title' key={`item${dependency.id}`}>
                 {dependency.name} <span>{dependency.group}</span>
               </div>
-              <div className="description" key={`description{dependency.id}`}>
+              <div className='description' key={`description{dependency.id}`}>
                 {dependency.description}
               </div>
               <IconPlus key={`icon${dependency.id}`} />
               {!valid && (
-                <div className="warning" key={`warning${dependency.id}`}>
+                <div className='warning' key={`warning${dependency.id}`}>
                   Requires Spring Boot {dependency.versionRequirement}.
                 </div>
               )}

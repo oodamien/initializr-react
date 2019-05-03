@@ -7,6 +7,7 @@
 ## 🚀 Quick start
 
 ### Run with NPM
+
 ```
 # Installation
 npm install
@@ -16,6 +17,7 @@ npm run-script develop
 ```
 
 ### Run with Yarn
+
 ```
 # Installation
 yarn install

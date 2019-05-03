@@ -1,11 +1,7 @@
-import React from "react"
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
+import React from 'react'
 
 class Radio extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   onClick = event => {
     event.preventDefault()
     this.props.handler(this.props.value)
@@ -13,7 +9,11 @@ class Radio extends React.Component {
 
   render() {
     return (
-      <a href="#" className={`radio ${this.props.checked ? 'checked' : ''}`} onClick={this.onClick}>
+      <a
+        href='/'
+        className={`radio ${this.props.checked ? 'checked' : ''}`}
+        onClick={this.onClick}
+      >
         {this.props.text}
       </a>
     )

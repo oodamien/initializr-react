@@ -1,10 +1,9 @@
-import React from "react"
-import PropTypes from "prop-types"
+import * as JsSearch from 'js-search'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import ListSearch from "./ListSearch"
-import CompareVersion from "./../../utils/version-compare"
-
-import * as JsSearch from "js-search"
+import CompareVersion from './../../utils/version-compare'
+import ListSearch from './ListSearch'
 
 class Typehead extends React.Component {
   search = null
@@ -12,14 +11,14 @@ class Typehead extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      search: "",
+      search: '',
       selected: 0,
     }
-    this.search = new JsSearch.Search("name")
-    this.search.addIndex("name")
-    this.search.addIndex("id")
-    this.search.addIndex("description")
-    this.search.addIndex("group")
+    this.search = new JsSearch.Search('name')
+    this.search.addIndex('name')
+    this.search.addIndex('id')
+    this.search.addIndex('description')
+    this.search.addIndex('group')
     this.search.addDocuments(this.props.options)
   }
 
@@ -32,7 +31,6 @@ class Typehead extends React.Component {
   }
 
   onKeyPress = (event, dependencies) => {
-    let selected = this.state.selected
     switch (event.keyCode) {
       case 40: // Down
         event.preventDefault()
@@ -56,7 +54,7 @@ class Typehead extends React.Component {
         break
       case 27: // Escape
         event.preventDefault()
-        this.setState({ search: "" })
+        this.setState({ search: '' })
         break
       case 39: // Right
       case 37: // Left
@@ -73,7 +71,7 @@ class Typehead extends React.Component {
       : true
     if (valid) {
       this.props.add(item)
-      this.setState({ search: "", selected: 0 })
+      this.setState({ search: '', selected: 0 })
       this.nameInput.focus()
     }
   }
@@ -108,19 +106,21 @@ class Typehead extends React.Component {
     }
     return (
       <>
-          <input type="text" className="control-input"
-            placeholder="Web, Security, JPA, Actuator, Devtools..."
-            value={this.state.search}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
-            ref={input => {
-              this.nameInput = input
-            }}
-            onKeyDown={e => {
-              this.onKeyPress(e, dependencies)
-            }}
-          />
+        <input
+          type='text'
+          className='control-input'
+          placeholder='Web, Security, JPA, Actuator, Devtools...'
+          value={this.state.search}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          onChange={this.onChange}
+          ref={input => {
+            this.nameInput = input
+          }}
+          onKeyDown={e => {
+            this.onKeyPress(e, dependencies)
+          }}
+        />
         <ListSearch
           boot={this.props.boot}
           dependencies={dependencies}

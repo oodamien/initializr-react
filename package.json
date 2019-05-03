@@ -4,10 +4,35 @@
   "description": "Start.spring.io",
   "version": "0.1.0",
   "author": "Damien Vitrac <dvitrac@pivotal.io>",
+  "keywords": [
+    "spring",
+    "initializr"
+  ],
+  "license": "Apache 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "scripts": {
+    "clean": "rimraf .cache",
+    "prebuild": "yarn run clean && yarn run lint && yarn run test",
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "prestart": "yarn run clean",
+    "start": "gatsby develop",
+    "serve": "gatsby serve",
+    "fix": "NODE_ENV=test import-sort --write '(src|utils|plugins)/**/*.js' && eslint . --fix && prettier --write '**/*.{{c,le,sc}ss,g?(raph)ql,htm?(l),js?(on|on5|onl|x|s),md?(x|wn),m?(ark)down,mkdn,ts?(x),vue,y?(a)ml}'",
+    "lint": "NODE_ENV=test import-sort -l '(src|utils|plugins)/**/*.js' && eslint . && prettier --check '**/*.{{c,le,sc}ss,g?(raph)ql,htm?(l),js?(on|on5|onl|x|s),md?(x|wn),m?(ark)down,mkdn,ts?(x),vue,y?(a)ml}'",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+  },
   "dependencies": {
     "file-saver": "^2.0.1",
     "gatsby": "^2.3.2",
     "gatsby-image": "^2.0.35",
+    "gatsby-plugin-google-analytics": "^2.0.19",
     "gatsby-plugin-manifest": "^2.0.24",
     "gatsby-plugin-offline": "^2.0.25",
     "gatsby-plugin-prefetch-google-fonts": "^1.4.1",
@@ -29,26 +54,59 @@
     "styled-react-modal": "^1.2.1"
   },
   "devDependencies": {
-    "prettier": "^1.16.4"
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "import-sort-cli": "^6.0.0",
+    "import-sort-parser-babylon": "^6.0.0",
+    "import-sort-style-renke": "^6.0.0",
+    "prettier": "^1.16.4",
+    "pretty-quick": "^1.10.0"
   },
-  "keywords": [
-    "spring",
-    "initializr"
-  ],
-  "license": "Apache 2.0",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "react-app",
+      "prettier",
+      "prettier/react"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ],
+      "no-unused-vars": [
+        "warn"
+      ]
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  "prettier": {
+    "endOfLine": "lf",
+    "tabWidth": 2,
+    "semi": false,
+    "printWidth": 80,
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "jsxBracketSameLine": false,
+    "arrowParens": "avoid"
   },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  "importSort": {
+    ".js": {
+      "parser": "babylon",
+      "style": "renke"
+    }
+  },
+  "on-save": {
+    "**/*.js": "cross-env NODE_ENV=test import-sort --write",
+    "**/*.{{c,le,sc}ss,g?(raph)ql,htm?(l),js?(on|on5|onl|x|s),md?(x|wn),m?(ark)down,mkdn,ts?(x),vue,y?(a)ml}": [
+      "prettier --write"
+    ]
   }
 }

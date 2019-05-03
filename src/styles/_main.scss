@@ -84,10 +84,10 @@ body {
       text-decoration: none;
       cursor: pointer;
       svg {
-          position: absolute;
-          left: 0px;
-          top: 0px;
-          width: 18px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 18px;
       }
       &:hover {
         color: $spring-primary-color;
@@ -97,10 +97,10 @@ body {
       }
       &.dropdown {
         svg.caret {
-            position: relative;
-            width: 10px;
-            top: 3px;
-            margin-left: 10px;
+          position: relative;
+          width: 10px;
+          top: 3px;
+          margin-left: 10px;
         }
       }
     }
@@ -168,7 +168,7 @@ body {
     padding: 8px 32px 8px 0px;
     flex: 0 0 280px;
     &.nopadding {
-      padding:0;
+      padding: 0;
       flex: 0 0 310px;
       margin-left: 6px;
     }
@@ -205,10 +205,10 @@ body {
 
 .colset-2 {
   display: flex;
-    min-height: 300px;
+  min-height: 300px;
   .column {
     flex: 1 1 0%;
-    &+.column {
+    & + .column {
       padding-left: 20px;
     }
   }
@@ -219,8 +219,8 @@ body {
 
 .control {
   padding-top: 8px;
-  &+.control {
-    padding-top: 16px;    
+  & + .control {
+    padding-top: 16px;
   }
 }
 
@@ -235,7 +235,6 @@ label {
 .dependencies label {
   padding: 8px 0;
 }
-
 
 .control-input {
   display: block;
@@ -270,9 +269,9 @@ label {
   line-height: 32px;
   :hover {
     border: 2px solid #d0d0d0;
-    background-color: #FFF;
+    background-color: #fff;
   }
-  
+
   &.primary {
     padding: 4px 32px;
     color: #fff;
@@ -444,7 +443,7 @@ label {
       float: left;
     }
     .group-items {
-      padding-left: 160px
+      padding-left: 160px;
     }
   }
 }
