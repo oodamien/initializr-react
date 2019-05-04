@@ -12,6 +12,7 @@ import { Meta } from '../components/common/meta'
 import { Typehead } from '../components/common/typehead'
 import { ToastContainer, toast } from 'react-toastify'
 import { GlobalHotKeys } from 'react-hotkeys'
+import { IconChevronRight } from '../components/common/icons'
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -59,6 +60,12 @@ class IndexPage extends React.Component {
   toggle = event => {
     event.preventDefault()
     this.setState({ more: !this.state.more })
+
+    if (!this.state.more) {
+      setTimeout(() => {
+        this.inputMetaName && this.inputMetaName.focus()
+      }, 300)
+    }
   }
 
   toggleDependency = event => {
@@ -192,91 +199,89 @@ class IndexPage extends React.Component {
                   }}
                 />
               </div>
-              <div className={`panel ${this.state.more ? 'panel-active' : ''}`}>
-                <div className='control'>
-                  <label>Name</label>
-                  <input
-                    type='text'
-                    className='control-input'
-                    value={this.state.meta.name}
-                    disabled={!this.state.more}
-                    onChange={event => {
-                      this.updateMetaState('name', event.target.value)
-                    }}
-                  />
-                </div>
-                <div className='control'>
-                  <label>Description</label>
-                  <input
-                    type='text'
-                    className='control-input'
-                    disabled={!this.state.more}
-                    value={this.state.meta.description}
-                    onChange={event => {
-                      this.updateMetaState('description', event.target.value)
-                    }}
-                  />
-                </div>
-                <div className='control'>
-                  <label>Package Name</label>
-                  <input
-                    type='text'
-                    className='control-input'
-                    disabled={!this.state.more}
-                    value={this.state.meta.packageName}
-                    onChange={event => {
-                      this.updateMetaState('packageName', event.target.value)
-                    }}
-                  />
-                </div>
-                <div className='control'>
-                  <label>Packaging</label>
-                  <div>
-                    <RadioGroup
-                      name='packaging'
-                      disabled={!this.state.more}
-                      selected={this.state.meta.packaging}
-                      options={data.meta.packaging}
-                      onChange={value => {
-                        this.updateMetaState('packaging', value)
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className='control'>
-                  <label>Java</label>
-                  <div>
-                    <RadioGroup
-                      name='java'
-                      disabled={!this.state.more}
-                      selected={this.state.meta.java}
-                      options={data.meta.java}
-                      onChange={value => {
-                        this.updateMetaState('java', value)
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
+
               <div className='more'>
                 <div className='wrap'>
-                  {!this.state.more ? (
-                    <button
-                      className='button'
-                      type='button'
-                      onClick={this.toggle}
-                    >
-                      More options
-                    </button>
-                  ) : (
-                    <button
-                      className='button'
-                      type='button'
-                      onClick={this.toggle}
-                    >
-                      Fewer options
-                    </button>
-                  )}
+                  <a
+                    href='/'
+                    onClick={this.toggle}
+                    className={this.state.more ? 'toggle' : ''}
+                  >
+                    <IconChevronRight />
+                    {!this.state.more ? 'Options' : 'Options'}
+                  </a>
+                </div>
+              </div>
+
+              <div className={`panel ${this.state.more ? 'panel-active' : ''}`}>
+                <div className='panel-wrap'>
+                  <div className='control'>
+                    <label>Name</label>
+                    <input
+                      type='text'
+                      className='control-input'
+                      value={this.state.meta.name}
+                      disabled={!this.state.more}
+                      ref={input => {
+                        this.inputMetaName = input
+                      }}
+                      onChange={event => {
+                        this.updateMetaState('name', event.target.value)
+                      }}
+                    />
+                  </div>
+                  <div className='control'>
+                    <label>Description</label>
+                    <input
+                      type='text'
+                      className='control-input'
+                      disabled={!this.state.more}
+                      value={this.state.meta.description}
+                      onChange={event => {
+                        this.updateMetaState('description', event.target.value)
+                      }}
+                    />
+                  </div>
+                  <div className='control'>
+                    <label>Package Name</label>
+                    <input
+                      type='text'
+                      className='control-input'
+                      disabled={!this.state.more}
+                      value={this.state.meta.packageName}
+                      onChange={event => {
+                        this.updateMetaState('packageName', event.target.value)
+                      }}
+                    />
+                  </div>
+                  <div className='control'>
+                    <label>Packaging</label>
+                    <div>
+                      <RadioGroup
+                        name='packaging'
+                        disabled={!this.state.more}
+                        selected={this.state.meta.packaging}
+                        options={data.meta.packaging}
+                        onChange={value => {
+                          this.updateMetaState('packaging', value)
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className='control'>
+                    <label>Java</label>
+                    <div>
+                      <RadioGroup
+                        name='java'
+                        disabled={!this.state.more}
+                        selected={this.state.meta.java}
+                        options={data.meta.java}
+                        onChange={value => {
+                          this.updateMetaState('java', value)
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -292,7 +297,9 @@ class IndexPage extends React.Component {
               <div className='dependencies-box'>
                 <div className='colset-2'>
                   <div className='column'>
-                    <label>Search dependencies to add</label>
+                    <label className='search-label'>
+                      Search dependencies to add
+                    </label>
                     <Typehead
                       boot={this.state.boot}
                       add={this.dependencyAdd}

@@ -206,7 +206,7 @@ div {
 // Dependencies
 
 .dependencies-box {
-  padding: 8px 0 8px 32px;
+  padding: 16px 0 8px 32px;
   flex: 2;
   max-width: 900px;
 }
@@ -330,18 +330,6 @@ label {
   }
 }
 
-.more {
-  height: 50px;
-  line-height: 16px;
-  padding-top: 8px;
-  margin-top: 12px;
-  & div.wrap {
-    border-bottom: 2px dotted #e4e4e4;
-    height: 18px;
-    text-align: center;
-  }
-}
-
 .submit {
   position: sticky;
   bottom: 0px;
@@ -436,12 +424,66 @@ label {
   }
 }
 
+.more {
+  line-height: 16px;
+  padding-top: 8px;
+  margin-top: 4px;
+  div.wrap {
+    border-bottom: 3px solid #ebebeb;
+    padding-bottom: 4px;
+    a {
+      position: relative;
+      display: block;
+      background: white;
+      height: 28px;
+      line-height: 28px;
+      margin-top: 4px;
+      padding: 0 $spring-8points * 2 0 24px;
+      color: $spring-color;
+      text-decoration: none;
+      border-radius: $spring-radius;
+      @include transition(all $spring-transition-duration);
+      &:hover {
+        color: $spring-color;
+        svg {
+          color: $spring-primary-color;
+        }
+      }
+      svg {
+        position: absolute;
+        width: 8px;
+        left: 8px;
+        top: 8px;
+        color: $spring-color;
+        @include transition(all $spring-transition-duration);
+      }
+      &.toggle {
+        svg {
+          transform: rotate(90deg);
+          left: 8px;
+          top: 8px;
+        }
+      }
+
+      &:focus {
+        outline: 1px dotted $spring-primary-color;
+      }
+    }
+  }
+}
+
 .panel {
   overflow: hidden;
   max-height: 0;
   @include transition(all $spring-transition-duration * 3);
   &.panel-active {
     max-height: 600px;
+  }
+  .panel-wrap {
+    border: 1px solid lighten(#ebebeb, 4);
+    border-top: 0 none;
+    padding: $spring-8points * 1.5 $spring-8points * 3;
+    padding-bottom: $spring-8points * 3;
   }
 }
 
@@ -491,4 +533,8 @@ label {
       padding-left: 160px;
     }
   }
+}
+
+.search-label {
+  padding-bottom: 8px;
 }
