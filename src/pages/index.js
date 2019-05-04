@@ -69,13 +69,18 @@ class IndexPage extends React.Component {
   updateMetaState = (prop, value) => {
     let meta = { ...this.state.meta }
     meta[prop] = value
+    if (prop === 'artifact' || prop === 'group') {
+      set(meta, 'name', get(meta, 'artifact'))
+      set(meta, 'packageName', `${get(meta, 'group')}.${get(meta, 'artifact')}`)
+    }
     this.setState({ meta: meta })
   }
 
   onSubmit = event => {
     event.preventDefault()
     const { project, language, boot, meta, dependencies } = this.state
-    const url = 'http://localhost:8080/starter.zip'
+    const apiUrl = this.props.data.site.edges[0].node.siteMetadata.apiUrl
+    const url = `${apiUrl}starter.zip`
     const params = querystring.stringify({
       type: project,
       language: language,
@@ -170,7 +175,7 @@ class IndexPage extends React.Component {
                 <input
                   type='text'
                   className='control-input'
-                  defaultValue={this.state.meta.group}
+                  value={this.state.meta.group}
                   onChange={event => {
                     this.updateMetaState('group', event.target.value)
                   }}
@@ -181,7 +186,7 @@ class IndexPage extends React.Component {
                 <input
                   type='text'
                   className='control-input'
-                  defaultValue={this.state.meta.artifact}
+                  value={this.state.meta.artifact}
                   onChange={event => {
                     this.updateMetaState('artifact', event.target.value)
                   }}
@@ -193,7 +198,7 @@ class IndexPage extends React.Component {
                   <input
                     type='text'
                     className='control-input'
-                    defaultValue={this.state.meta.name}
+                    value={this.state.meta.name}
                     disabled={!this.state.more}
                     onChange={event => {
                       this.updateMetaState('name', event.target.value)
@@ -206,7 +211,7 @@ class IndexPage extends React.Component {
                     type='text'
                     className='control-input'
                     disabled={!this.state.more}
-                    defaultValue={this.state.meta.description}
+                    value={this.state.meta.description}
                     onChange={event => {
                       this.updateMetaState('description', event.target.value)
                     }}
@@ -218,7 +223,7 @@ class IndexPage extends React.Component {
                     type='text'
                     className='control-input'
                     disabled={!this.state.more}
-                    defaultValue={this.state.meta.packageName}
+                    value={this.state.meta.packageName}
                     onChange={event => {
                       this.updateMetaState('packageName', event.target.value)
                     }}
@@ -351,6 +356,22 @@ class IndexPage extends React.Component {
 
 export const jsonObject = graphql`
   query {
+    site: allSite {
+      edges {
+        node {
+          id
+          siteMetadata {
+            title
+            description
+            twitter
+            canonical
+            author
+            image
+            apiUrl
+          }
+        }
+      }
+    }
     allContentJson {
       edges {
         node {

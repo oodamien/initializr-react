@@ -4,24 +4,26 @@
   </a>
 </p>
 
-## 🚀 Quick start
+## Introduction
 
-### Run with NPM
+This is the **Initializr Website**, located at [https://start.spring.io](https://start.spring.io). The application is powered by [GatsbyJS](https://https://gatsbyjs.org).
 
-```
-# Installation
-npm install
+## Building
 
-# Dev serve
-npm run-script develop
-```
+You'll need [NodeJS v10+](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/) installed globally.
 
-### Run with Yarn
+```bash
+# Init
+yarn install        # Install dependencies
 
-```
-# Installation
-yarn install
+# Linter / Prettier
+yarn run lint       # Linter
+yarn run fix        # Fix linting errors
 
-# Dev serve
-yarn run develop
+# Dev
+yarn start          # Run dev
+
+# Prod
+yarn build          # Run dev
+yarn serve          # Serve the prod build
 ```
