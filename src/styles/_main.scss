@@ -210,6 +210,7 @@ div {
   max-width: 750px;
   .colset-2 {
     padding: $spring-8points * 2;
+    padding-top: $spring-8points * 2.5;
   }
 }
 
@@ -372,12 +373,12 @@ label {
 .dependencies-list {
   .dependency-item {
     position: relative;
-    border: 2px solid #f7f7f7;
+    border: 2px solid lighten($spring-border-color, 4);
     background: #ffffff;
     line-height: 24px;
     padding: 8px 40px 8px 16px;
     margin: 8px 0;
-    border-radius: 4px;
+    border-radius: $spring-radius;
     cursor: pointer;
     svg {
       position: absolute;
@@ -389,6 +390,14 @@ label {
     }
     .title {
       font-weight: bold;
+      span {
+        background: rgba($spring-color, 0.4);
+        color: white;
+        border-radius: $spring-radius;
+        text-transform: uppercase;
+        font-size: 13px;
+        padding: 1px $spring-8points/2;
+      }
     }
     .description {
       color: rgba(0, 0, 0, 0.6);
@@ -397,12 +406,16 @@ label {
       font-weight: bold;
       color: #f30808;
     }
-    &:hover svg {
-      display: block;
+    &:hover {
+      border-color: $spring-border-color;
+      svg {
+        display: block;
+      }
     }
   }
   .dependency-item-gray {
     background: #f7f7f7;
+    border: 2px solid #f7f7f7;
     &:hover svg {
       display: none;
     }
@@ -491,15 +504,15 @@ label {
 // -----------------
 // Group
 
+$gw: 200px;
 .groups {
   //margin-top: -27px;
   padding: 0px 0px 16px $spring-8points;
   .group {
-    display: inline;
     line-height: 1.4rem;
     position: relative;
-    border-bottom: 1px solid rgb(238, 238, 238);
-    padding: 16px 0px;
+    padding: 16px 0px 0 0;
+    padding-left: $gw;
     a {
       display: block;
       position: relative;
@@ -550,6 +563,12 @@ label {
       &.invalid {
         background: #f7f7f7;
         cursor: not-allowed;
+        &:hover {
+          border: 2px solid #f7f7f7;
+          svg {
+            display: none;
+          }
+        }
       }
 
       &.checked {
@@ -558,6 +577,12 @@ label {
         border-color: lighten($spring-border-color, 4);
         span {
           color: rgba($spring-color, 0.8);
+        }
+        &:hover {
+          border-color: $spring-border-color;
+        }
+        &:hover {
+          border: 2px solid lighten($spring-border-color, 4);
         }
       }
 
@@ -570,11 +595,23 @@ label {
       color: #f30808;
     }
     .group-title {
-      //position: sticky;
+      top: 40px;
+      z-index: 80;
+      position: sticky;
       font-weight: bold;
       color: rgb(109, 179, 63);
       padding-top: $spring-8points * 2;
-      padding-left: $spring-8points;
+      padding-left: 0;
+      float: left;
+      margin-left: -$gw;
+
+      span {
+        background: rgba($spring-color, 0.4);
+        color: white;
+        font-size: 14px;
+        border-radius: $spring-radius;
+        padding: 2px $spring-8points;
+      }
       //float: left;
     }
     .group-items {
@@ -590,8 +627,10 @@ label {
   padding-bottom: 8px;
 }
 
-.padding-top-sm {
+.sticky-label {
   padding-top: $spring-8points / 2;
+  position: sticky;
+  top: 0;
 }
 
 .tab {
@@ -627,11 +666,15 @@ label {
   strong {
     float: right;
     font-weight: normal;
-    color: rgba($spring-color, 0.6);
-    padding-top: 4px;
+    background-color: $spring-gray-color;
+    padding: 0 $spring-8points;
+    border-radius: $spring-radius;
+    line-height: $spring-8points * 3;
+    margin-top: $spring-8points;
+    font-weight: bold;
+    color: rgba($spring-color, 0.7);
     span {
-      font-weight: bold;
-      color: $spring-primary-color;
+      color: $spring-color;
     }
   }
 }

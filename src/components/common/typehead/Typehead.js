@@ -114,6 +114,7 @@ class Typehead extends React.Component {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onChange={this.onChange}
+          id='input-quicksearch'
           ref={input => {
             this.nameInput = input
           }}

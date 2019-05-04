@@ -49,7 +49,7 @@ class CheckboxList extends React.Component {
         {grouped.map(group => (
           <div className='group' key={group.group}>
             <div className='group-title' key={`title${group.group}`}>
-              {group.group}
+              <span>{group.group}</span>
             </div>
             <div className='group-items' key={`links${group.group}`}>
               {group.children.map(dep => (
@@ -57,6 +57,9 @@ class CheckboxList extends React.Component {
                   href='/'
                   onClick={event => {
                     event.preventDefault()
+                    if (!dep.valid) {
+                      return
+                    }
                     this.onClick({
                       target: {
                         value: dep.id,
@@ -64,6 +67,7 @@ class CheckboxList extends React.Component {
                       },
                     })
                   }}
+                  tabIndex={!dep.valid ? -1 : ''}
                   className={`${!dep.valid ? 'invalid' : ''} ${
                     select[dep.id] === true ? 'checked' : ''
                   }`}

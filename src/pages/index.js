@@ -70,6 +70,14 @@ class IndexPage extends React.Component {
 
   setTab = tab => {
     this.setState({ tab: tab })
+    // Hack focus
+    if (tab === 'quick-search') {
+      try {
+        setTimeout(() => {
+          document.getElementById('input-quicksearch').focus()
+        }, 100)
+      } catch (e) {}
+    }
   }
 
   updateMetaState = (prop, value) => {
@@ -117,7 +125,7 @@ class IndexPage extends React.Component {
       )
       .then(function(blob) {
         if (!blob) {
-          toast.error('An error occured. The server API is not avalaible.')
+          toast.error('The server API is not available.')
           return
         }
         const fileName = `${meta.artifact}.zip`
@@ -288,7 +296,7 @@ class IndexPage extends React.Component {
 
           <div className='colset'>
             <div className='left'>
-              <div className='padding-top-sm'>Dependencies</div>
+              <div className='sticky-label'>Dependencies</div>
             </div>
             <div className='dependencies-box'>
               <div className='tab'>
@@ -339,7 +347,7 @@ class IndexPage extends React.Component {
                   <div className='column'>
                     {this.state.dependencies.length > 0 && (
                       <>
-                        Selected dependencies
+                        <label>Selected dependencies</label>
                         <List
                           boot={this.state.boot}
                           remove={this.dependencyRemove}
