@@ -42,6 +42,7 @@ div {
       line-height: 1.6rem;
       font-weight: normal;
       width: 205px;
+      outline: 1px dotted white;
       span {
         display: block;
       }
@@ -61,7 +62,7 @@ div {
         top: 6px;
       }
       &:focus {
-        outline: 1px dotted $spring-primary-color;
+        outline: 1px dotted $spring-outline-color;
       }
     }
   }
@@ -91,12 +92,13 @@ div {
       margin: 0px 12px;
       text-decoration: none;
       cursor: pointer;
+      outline: none;
       @include transition(color $spring-transition-duration);
       svg {
         position: absolute;
         left: 4px;
         top: 8px;
-        width: 18px;
+        height: 18px;
       }
       &:hover {
         color: $spring-primary-color;
@@ -109,9 +111,6 @@ div {
           top: 3px;
           margin-left: 10px;
         }
-      }
-      &:focus {
-        outline: 1px dotted $spring-primary-color;
       }
     }
   }
@@ -206,9 +205,12 @@ div {
 // Dependencies
 
 .dependencies-box {
-  padding: 16px 0 8px 32px;
+  padding: 8px 0 8px 32px;
   flex: 2;
-  max-width: 900px;
+  max-width: 750px;
+  .colset-2 {
+    padding: $spring-8points * 2;
+  }
 }
 
 // -----------------
@@ -283,13 +285,13 @@ label {
   cursor: pointer;
   line-height: 32px;
   @include transition(all $spring-transition-duration);
-  outline: none;
+  outline: 1px dotted white;
   &:hover {
     border: 2px solid #d0d0d0;
     background-color: #fff;
   }
   &:focus {
-    outline: 1px dotted $spring-primary-color;
+    outline: 1px dotted $spring-outline-color;
   }
   &.primary {
     padding: 4px 32px;
@@ -325,8 +327,9 @@ label {
   cursor: pointer;
   text-decoration: underline;
   color: #097dff;
+  outline: 1px dotted white;
   &:focus {
-    outline: 1px dotted $spring-primary-color;
+    outline: 1px dotted $spring-outline-color;
   }
 }
 
@@ -340,9 +343,6 @@ label {
   border-top: 1px solid #ccc;
 }
 
-// -----------------
-// RadioGroup
-
 .radio {
   display: inline-block;
   border-bottom: 3px solid $spring-border-color;
@@ -355,7 +355,7 @@ label {
   cursor: pointer;
   margin-right: 4px;
   @include transition(all $spring-transition-duration);
-  outline: none;
+  outline: 1px dotted white;
   &:hover {
     border-color: $spring-border-color-hover;
     color: $spring-color;
@@ -365,7 +365,7 @@ label {
     color: #000;
   }
   &:focus {
-    outline: 1px dotted $spring-primary-color;
+    outline: 1px dotted $spring-outline-color;
   }
 }
 
@@ -385,7 +385,7 @@ label {
       right: 15px;
       margin-top: -7px;
       display: none;
-      width: 14px;
+      height: 16px;
     }
     .title {
       font-weight: bold;
@@ -442,6 +442,7 @@ label {
       color: $spring-color;
       text-decoration: none;
       border-radius: $spring-radius;
+      outline: 1px dotted white;
       @include transition(all $spring-transition-duration);
       &:hover {
         color: $spring-color;
@@ -466,7 +467,7 @@ label {
       }
 
       &:focus {
-        outline: 1px dotted $spring-primary-color;
+        outline: 1px dotted $spring-outline-color;
       }
     }
   }
@@ -491,50 +492,146 @@ label {
 // Group
 
 .groups {
-  margin-top: -27px;
-  padding: 0px 0px 16px;
+  //margin-top: -27px;
+  padding: 0px 0px 16px $spring-8points;
   .group {
+    display: inline;
     line-height: 1.4rem;
     position: relative;
     border-bottom: 1px solid rgb(238, 238, 238);
     padding: 16px 0px;
-    label {
+    a {
       display: block;
       position: relative;
+      text-decoration: none;
+      border: 2px solid #f7f7f7;
+      background: #f7f7f7;
       cursor: pointer;
-      padding: 11px 40px 11px 35px;
+      padding: 11px 40px 11px 15px;
       margin: 8px 0px;
       border-radius: 4px;
       font-size: $spring-font-size;
       color: rgba(0, 0, 0, 0.6);
+      // @include transition(all $spring-transition-duration);
+      color: rgba($spring-color, 0.8);
+      svg {
+        display: none;
+        height: 16px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        margin-top: -8px;
+      }
       strong {
         font-weight: bold;
-        color: $spring-color;
+        display: block;
+      }
+      span {
+        display: block;
+        color: rgba($spring-color, 0.6);
       }
       input {
         display: inline-block;
         margin-left: -22px;
         margin-right: 10px;
+        display: none;
       }
       &:hover {
+        background: #e7f1f4;
+        border-color: #e7f1f4;
+        color: $spring-color;
+        svg {
+          display: block;
+        }
+        span {
+          color: rgba($spring-color, 0.8);
+        }
+      }
+      &.invalid {
         background: #f7f7f7;
+        cursor: not-allowed;
+      }
+
+      &.checked {
+        color: $spring-color;
+        background: #fff;
+        border-color: lighten($spring-border-color, 4);
+        span {
+          color: rgba($spring-color, 0.8);
+        }
+      }
+
+      &:focus {
+        outline: 1px dotted $spring-outline-color;
       }
     }
+    .warning {
+      font-weight: bold;
+      color: #f30808;
+    }
     .group-title {
-      position: sticky;
+      //position: sticky;
       font-weight: bold;
       color: rgb(109, 179, 63);
-      margin-top: 16px;
-      width: 150px;
-      top: 10px;
-      float: left;
+      padding-top: $spring-8points * 2;
+      padding-left: $spring-8points;
+      //float: left;
     }
     .group-items {
-      padding-left: 160px;
+      padding-right: $spring-8points;
+    }
+    &:first-child {
+      padding-top: 8px;
     }
   }
 }
 
 .search-label {
   padding-bottom: 8px;
+}
+
+.padding-top-sm {
+  padding-top: $spring-8points / 2;
+}
+
+.tab {
+  border-bottom: 3px solid lighten($spring-border-color, 6);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: white;
+  a {
+    display: inline-block;
+    margin-bottom: -3px;
+    text-decoration: none;
+    color: rgba($spring-color, 0.6);
+    border-bottom: 3px solid lighten($spring-border-color, 6);
+    padding: 0 $spring-8points * 2;
+    padding-bottom: $spring-8points / 2;
+    padding-top: $spring-8points / 2;
+    font-weight: bold;
+    outline: 1px dotted white;
+    @include transition(all $spring-transition-duration);
+    &:hover {
+      color: $spring-color;
+      border-bottom: 3px solid $spring-border-color-hover;
+    }
+    &.active {
+      color: $spring-color;
+      border-bottom: 3px solid $spring-primary-color;
+    }
+    &:focus {
+      outline: 1px dotted $spring-outline-color;
+    }
+  }
+  strong {
+    float: right;
+    font-weight: normal;
+    color: rgba($spring-color, 0.6);
+    padding-top: 4px;
+    span {
+      font-weight: bold;
+      color: $spring-primary-color;
+    }
+  }
 }

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import CompareVersion from './../../utils/version-compare'
+import { IconPlus, IconTimes } from './../icons'
 
 class CheckboxList extends React.Component {
   groupByParent = arr => {
@@ -52,7 +53,17 @@ class CheckboxList extends React.Component {
             </div>
             <div className='group-items' key={`links${group.group}`}>
               {group.children.map(dep => (
-                <label
+                <a
+                  href='/'
+                  onClick={event => {
+                    event.preventDefault()
+                    this.onClick({
+                      target: {
+                        value: dep.id,
+                        checked: !select[dep.id] === true,
+                      },
+                    })
+                  }}
                   className={`${!dep.valid ? 'invalid' : ''} ${
                     select[dep.id] === true ? 'checked' : ''
                   }`}
@@ -66,14 +77,15 @@ class CheckboxList extends React.Component {
                     disabled={!dep.valid}
                     onChange={this.onClick}
                   />
-                  <strong>{dep.name}</strong>:{` `}
+                  <strong>{dep.name}</strong>
                   <span>{dep.description}</span>
                   {!dep.valid && (
                     <div className='warning' key={`warning${dep.id}`}>
                       Requires Spring Boot {dep.versionRequirement}.
                     </div>
                   )}
-                </label>
+                  {!select[dep.id] === true ? <IconPlus /> : <IconTimes />}
+                </a>
               ))}
             </div>
           </div>

@@ -27,7 +27,7 @@ class IndexPage extends React.Component {
     )
     this.state = {
       dependencies: [],
-      toggleDependency: false,
+      tab: 'quick-search',
       more: false,
       form: props.data.default,
       ...values,
@@ -68,9 +68,8 @@ class IndexPage extends React.Component {
     }
   }
 
-  toggleDependency = event => {
-    event.preventDefault()
-    this.setState({ toggleDependency: !this.state.toggleDependency })
+  setTab = tab => {
+    this.setState({ tab: tab })
   }
 
   updateMetaState = (prop, value) => {
@@ -286,15 +285,45 @@ class IndexPage extends React.Component {
               </div>
             </div>
           </div>
-          {!this.state.toggleDependency ? (
-            <div className='colset'>
-              <div className='left'>
-                Dependencies
-                <a href='/' className='see-all' onClick={this.toggleDependency}>
-                  View all
+
+          <div className='colset'>
+            <div className='left'>
+              <div className='padding-top-sm'>Dependencies</div>
+            </div>
+            <div className='dependencies-box'>
+              <div className='tab'>
+                <a
+                  href='/'
+                  onClick={event => {
+                    event.preventDefault()
+                    this.setTab('quick-search')
+                  }}
+                  className={`${
+                    this.state.tab === 'quick-search' ? 'active' : ''
+                  }`}
+                >
+                  Quick search
                 </a>
+                <a
+                  href='/'
+                  onClick={event => {
+                    event.preventDefault()
+                    this.setTab('list')
+                  }}
+                  className={`${this.state.tab === 'list' ? 'active' : ''}`}
+                >
+                  List dependencies
+                </a>
+                {this.state.dependencies.length > 0 && (
+                  <>
+                    <strong>
+                      <span>{this.state.dependencies.length}</span> selected
+                    </strong>
+                  </>
+                )}
               </div>
-              <div className='dependencies-box'>
+
+              {this.state.tab === 'quick-search' ? (
                 <div className='colset-2'>
                   <div className='column'>
                     <label className='search-label'>
@@ -320,17 +349,7 @@ class IndexPage extends React.Component {
                     )}
                   </div>
                 </div>
-              </div>
-            </div>
-          ) : (
-            <div className='colset'>
-              <div className='left'>
-                Dependencies
-                <a href='/' className='see-all' onClick={this.toggleDependency}>
-                  Search
-                </a>
-              </div>
-              <div className='dependencies-box'>
+              ) : (
                 <CheckboxList
                   boot={this.state.boot}
                   add={this.dependencyAdd}
@@ -338,9 +357,10 @@ class IndexPage extends React.Component {
                   list={data.dependencies}
                   checked={this.state.dependencies}
                 />
-              </div>
+              )}
             </div>
-          )}
+          </div>
+
           <div className='sticky'>
             <div className='colset'>
               <div className='left nopadding'>

@@ -34,7 +34,7 @@ class RadioGroup extends React.Component {
       )
     })
 
-    return <div>{allOptions}</div>
+    return <div className='group-radio'>{allOptions}</div>
   }
 }
 
