@@ -34,7 +34,6 @@ class ListSearch extends React.Component {
                 !valid ? 'invalid' : ''
               }  ${this.props.selected === index ? 'selected' : ''}`}
               key={`item${dependency.id}`}
-              invalid={!valid}
               selected={this.props.selected === index}
               onClick={() => {
                 if (valid) {

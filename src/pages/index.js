@@ -83,8 +83,11 @@ class IndexPage extends React.Component {
   updateMetaState = (prop, value) => {
     let meta = { ...this.state.meta }
     meta[prop] = value
-    if (prop === 'artifact' || prop === 'group') {
+    if (prop === 'artifact') {
       set(meta, 'name', get(meta, 'artifact'))
+      set(meta, 'packageName', `${get(meta, 'group')}.${get(meta, 'artifact')}`)
+    }
+    if (prop === 'group') {
       set(meta, 'packageName', `${get(meta, 'group')}.${get(meta, 'artifact')}`)
     }
     this.setState({ meta: meta })
@@ -340,6 +343,7 @@ class IndexPage extends React.Component {
                     <Typehead
                       boot={this.state.boot}
                       add={this.dependencyAdd}
+                      submit={this.onSubmit}
                       options={data.dependencies}
                       exclude={this.state.dependencies}
                     />

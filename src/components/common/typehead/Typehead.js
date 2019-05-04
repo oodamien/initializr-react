@@ -50,6 +50,8 @@ class Typehead extends React.Component {
         event.preventDefault()
         if (dependencies.length > 0) {
           this.onAdded(dependencies[this.state.selected])
+        } else {
+          this.props.submit(event)
         }
         break
       case 27: // Escape
@@ -154,6 +156,7 @@ Typehead.propTypes = {
     })
   ),
   add: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
   boot: PropTypes.string.isRequired,
 }
 

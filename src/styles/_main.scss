@@ -42,7 +42,7 @@ div {
       line-height: 1.6rem;
       font-weight: normal;
       width: 205px;
-      outline: 1px dotted white;
+      outline: 1px dotted rgba(0, 0, 0, 0);
       span {
         display: block;
       }
@@ -150,7 +150,7 @@ div {
 .footer {
   background: $spring-gray-color;
   line-height: 24px;
-  padding: 0 40px 0 8px;
+  padding: 0 40px 8px 8px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.5);
   font-size: $spring-font-size-sm;
@@ -312,6 +312,7 @@ label {
 .sticky {
   position: sticky;
   bottom: 0px;
+  z-index: 100;
 }
 
 // -----------------
@@ -335,12 +336,11 @@ label {
 }
 
 .submit {
-  position: sticky;
   bottom: 0px;
   width: 920px;
   background: white;
   height: 36px;
-  padding: 24px 0 28px;
+  padding: 18px 0 29px;
   border-top: 1px solid #ccc;
 }
 
