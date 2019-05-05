@@ -209,7 +209,7 @@ div {
   flex: 2;
   max-width: 750px;
   .colset-2 {
-    padding: $spring-8points * 2;
+    //padding: $spring-8points * 2;
     padding-top: $spring-8points * 2.5;
   }
 }
@@ -507,11 +507,11 @@ label {
 $gw: 200px;
 .groups {
   //margin-top: -27px;
-  padding: 0px 0px 16px $spring-8points;
+  padding: 0px 0px 16px 0;
   .group {
     line-height: 1.4rem;
     position: relative;
-    padding: 16px 0px 0 0;
+    padding: 16px 0 0 0;
     padding-left: $gw;
     a {
       display: block;
@@ -615,7 +615,6 @@ $gw: 200px;
       //float: left;
     }
     .group-items {
-      padding-right: $spring-8points;
     }
     &:first-child {
       padding-top: 8px;
@@ -646,11 +645,13 @@ $gw: 200px;
     color: rgba($spring-color, 0.6);
     border-bottom: 3px solid lighten($spring-border-color, 6);
     padding: 0 $spring-8points * 2;
-    padding-bottom: $spring-8points / 2;
     padding-top: $spring-8points / 2;
     font-weight: bold;
     outline: 1px dotted white;
     @include transition(all $spring-transition-duration);
+    svg {
+      width: 16px;
+    }
     &:hover {
       color: $spring-color;
       border-bottom: 3px solid $spring-border-color-hover;
@@ -670,7 +671,7 @@ $gw: 200px;
     padding: 0 $spring-8points;
     border-radius: $spring-radius;
     line-height: $spring-8points * 3;
-    margin-top: $spring-8points;
+    margin-top: 6px;
     font-weight: bold;
     color: rgba($spring-color, 0.7);
     span {

@@ -4,6 +4,7 @@ import get from 'lodash.get'
 import querystring from 'querystring'
 import set from 'lodash.set'
 import { graphql } from 'gatsby'
+import queryString from 'query-string'
 
 import { CheckboxList } from '../components/common/checkbox-list'
 import { Footer, Layout } from '../components/common/layout'
@@ -12,7 +13,11 @@ import { Meta } from '../components/common/meta'
 import { Typehead } from '../components/common/typehead'
 import { ToastContainer, toast } from 'react-toastify'
 import { GlobalHotKeys } from 'react-hotkeys'
-import { IconChevronRight } from '../components/common/icons'
+import {
+  IconChevronRight,
+  IconSearch,
+  IconList,
+} from '../components/common/icons'
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -29,7 +34,6 @@ class IndexPage extends React.Component {
       dependencies: [],
       tab: 'quick-search',
       more: false,
-      form: props.data.default,
       ...values,
     }
     this.keyMap = {
@@ -41,7 +45,49 @@ class IndexPage extends React.Component {
         submit(event)
       },
     }
+    // Parsing parameters URL (search or hash)
+    if (props.location.search || props.location.hash) {
+      let queryParams = queryString.parse(props.location.search)
+      if (props.location.hash) {
+        let hash = props.location.hash.substr(2)
+        queryParams = queryString.parse(`?${hash}`)
+      }
+      const params = {
+        type: 'project',
+        language: 'language',
+        boot: 'boot',
+        packaging: 'meta.packaging',
+        javaVersion: 'meta.java',
+        groupId: 'meta.group',
+        artifactId: 'meta.artifact',
+        name: 'meta.name',
+        description: 'meta.description',
+        packageName: 'meta.packageName',
+      }
+      Object.keys(queryParams).forEach(entry => {
+        const key = get(params, entry)
+        const value = get(queryParams, entry).toLowerCase()
+        if (key) {
+          switch (key) {
+            case 'project':
+            case 'language':
+            case 'boot':
+            case 'meta.packaging':
+            case 'meta.java':
+              const vals = get(data, key, [])
+              if (vals.find(a => a.key === value)) {
+                set(this.state, key, value)
+              }
+              break
+            default:
+              set(this.state, key, value)
+          }
+        }
+      })
+    }
   }
+
+  componentDidMount() {}
 
   dependencyAdd = dependency => {
     console.log('Add: ' + dependency.id)
@@ -313,7 +359,7 @@ class IndexPage extends React.Component {
                     this.state.tab === 'quick-search' ? 'active' : ''
                   }`}
                 >
-                  Quick search
+                  <IconSearch />
                 </a>
                 <a
                   href='/'
@@ -323,7 +369,7 @@ class IndexPage extends React.Component {
                   }}
                   className={`${this.state.tab === 'list' ? 'active' : ''}`}
                 >
-                  List dependencies
+                  <IconList />
                 </a>
                 {this.state.dependencies.length > 0 && (
                   <>
