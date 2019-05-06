@@ -82,7 +82,7 @@ class CheckboxList extends React.Component {
                     onChange={this.onClick}
                   />
                   <strong>{dep.name}</strong>
-                  <span>{dep.description}</span>
+                  {dep.valid && <span>{dep.description}</span>}
                   {!dep.valid && (
                     <div className='warning' key={`warning${dep.id}`}>
                       Requires Spring Boot {dep.versionRequirement}.
