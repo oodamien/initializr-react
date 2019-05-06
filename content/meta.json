@@ -369,13 +369,6 @@
       "description": "Persistence support using Java Object Oriented Querying"
     },
     {
-      "id": "cache",
-      "name": "Spring cache abstraction",
-      "group": "NoSql",
-      "weight": 0,
-      "description": "Provides cache-related operations, such as the ability to update the content of the cache, but does not provide the actual data store. "
-    },
-    {
       "id": "data-redis",
       "name": "Spring Data Redis (Access + Driver)",
       "group": "NoSQL",
@@ -542,6 +535,70 @@
       "description": "WebSocket applications with SockJS and STOMP"
     },
     {
+      "id": "batch",
+      "name": "Spring Batch",
+      "group": "I/O",
+      "weight": 100,
+      "description": "Provides reusable functions for processing large volumes of records. Includes logging/tracing, transaction management, job processing statistics, job restart /skip, resource management, and chunk based processing."
+    },
+    {
+      "id": "cache",
+      "name": "Spring cache abstraction",
+      "group": "I/O",
+      "weight": 0,
+      "description": "Provides cache-related operations, such as the ability to update the content of the cache, but does not provide the actual data store. "
+    },
+    {
+      "id": "mail",
+      "name": "Java Mail Sender",
+      "group": "I/O",
+      "weight": 0,
+      "description": "Send email using Java Mail and Spring Framework's JavaMailSender"
+    },
+    {
+      "id": "quartz",
+      "name": "Quartz Scheduler",
+      "group": "I/O",
+      "weight": 0,
+      "description": "Schedule jobs using Quartz",
+      "versionRange": "2.0.0.M2",
+      "versionRequirement": ">=2.0.0.M2"
+    },
+    {
+      "id": "actuator",
+      "name": "Spring Boot Actuator",
+      "group": "Dev Ops",
+      "weight": 1,
+      "description": "Supports built in (or custom) endpoints that let you monitor and manage your application - such as application health, metrics, sessions, etc."
+    },
+    {
+      "id": "actuator-docs",
+      "name": "Actuator Docs",
+      "group": "Dev Ops",
+      "weight": 0,
+      "description": "API documentation for the Actuator endpoints",
+      "versionRange": "[1.5.0.RELEASE,2.0.0.M1)",
+      "versionRequirement": ">=1.5.0.RELEASE and <2.0.0.M1"
+    },
+    {
+      "id": "codecentric-spring-boot-admin-server",
+      "name": "Spring Boot Admin (Server)",
+      "group": "Dev Ops",
+      "weight": 0,
+      "description": "A community project to manage and monitor your Spring Boot applications.  Provides a UI on top of the Spring Boot Actuator endpoints.",
+      "versionRange": "1.5.9.RELEASE",
+      "versionRequirement": ">=1.5.9.RELEASE"
+    },
+    {
+      "id": "codecentric-spring-boot-admin-client",
+      "name": "Spring Boot Admin (Client)",
+      "group": "Dev Ops",
+      "weight": 0,
+      "description": "Required for your application to register with a Spring Boot Admin Server instance.",
+      "versionRange": "1.5.9.RELEASE",
+      "versionRequirement": ">=1.5.9.RELEASE"
+    },
+    {
       "id": "cloud-task",
       "name": "Task",
       "group": "Spring Cloud",
@@ -586,6 +643,20 @@
       "description": "Framework for building Spring Boot apps that implement the Open Service Broker API, which can deliver services to applications running within cloud native platforms such as Cloud Foundry, Kubernetes, and OpenShift.",
       "versionRange": "2.0.0.RELEASE",
       "versionRequirement": ">=2.0.0.RELEASE"
+    },
+    {
+      "id": "cloud-contract-verifier",
+      "name": "Cloud Contract Verifier",
+      "group": "Spring Cloud Tools",
+      "weight": 0,
+      "description": "Moves TDD to the level of software architecture by enabling Consumer Driven Contract (CDC) development of JVM-based applications."
+    },
+    {
+      "id": "cloud-contract-stub-runner",
+      "name": "Cloud Contract Stub Runner",
+      "group": "Spring Cloud Tools",
+      "weight": 0,
+      "description": "Stub Runner for HTTP/Messaging based communication. Allows creating WireMock stubs from RestDocs tests"
     },
     {
       "id": "cloud-config-client",
@@ -634,7 +705,7 @@
     {
       "id": "cloud-eureka-server",
       "name": "Eureka Server",
-      "group": "Cloud Discovery",
+      "group": "Spring Cloud Discovery",
       "weight": 0,
       "description": "Spring Cloud Netflix Eureka Server"
     },
@@ -662,7 +733,7 @@
     {
       "id": "cloud-zuul",
       "name": "Zuul",
-      "group": "Cloud Routing",
+      "group": "Spring Cloud Routing",
       "weight": 0,
       "description": "Intelligent and programmable routing with Spring Cloud Netflix Zuul"
     },
@@ -736,7 +807,7 @@
     {
       "id": "cloud-bus",
       "name": "Cloud Bus",
-      "group": "Cloud Messaging",
+      "group": "Spring Cloud Messaging",
       "weight": 0,
       "description": "Links nodes of a distributed system with a lightweight message broker which can used to broadcast state changes or other management instructions.  (requires Kafka or RabbitMQ)"
     },
@@ -755,20 +826,6 @@
       "description": "Reactive messaging microservices with Spring Cloud Stream (requires a binder, e.g. Kafka or RabbitMQ)",
       "versionRange": "2.0.0.RC2",
       "versionRequirement": ">=2.0.0.RC2"
-    },
-    {
-      "id": "cloud-contract-verifier",
-      "name": "Cloud Contract Verifier",
-      "group": "Spring Cloud Contract",
-      "weight": 0,
-      "description": "Moves TDD to the level of software architecture by enabling Consumer Driven Contract (CDC) development of JVM-based applications."
-    },
-    {
-      "id": "cloud-contract-stub-runner",
-      "name": "Cloud Contract Stub Runner",
-      "group": "Spring Cloud Contract",
-      "weight": 0,
-      "description": "Stub Runner for HTTP/Messaging based communication. Allows creating WireMock stubs from RestDocs tests"
     },
     {
       "id": "scs-config-client",
@@ -874,63 +931,6 @@
       "description": "Adds the GCP Support entry and all the required dependencies so that the Google Cloud Storage integration work out of the box.",
       "versionRange": "2.0.0.RELEASE",
       "versionRequirement": ">=2.0.0.RELEASE"
-    },
-    {
-      "id": "batch",
-      "name": "Spring Batch",
-      "group": "I/O",
-      "weight": 100,
-      "description": "Provides reusable functions for processing large volumes of records. Includes logging/tracing, transaction management, job processing statistics, job restart /skip, resource management, and chunk based processing."
-    },
-    {
-      "id": "mail",
-      "name": "Java Mail Sender",
-      "group": "I/O",
-      "weight": 0,
-      "description": "Send email using Java Mail and Spring Framework's JavaMailSender"
-    },
-    {
-      "id": "quartz",
-      "name": "Quartz Scheduler",
-      "group": "I/O",
-      "weight": 0,
-      "description": "Schedule jobs using Quartz",
-      "versionRange": "2.0.0.M2",
-      "versionRequirement": ">=2.0.0.M2"
-    },
-    {
-      "id": "actuator",
-      "name": "Spring Boot Actuator",
-      "group": "Dev Ops",
-      "weight": 1,
-      "description": "Supports built in (or custom) endpoints that let you monitor and manage your application - such as application health, metrics, sessions, etc."
-    },
-    {
-      "id": "actuator-docs",
-      "name": "Actuator Docs",
-      "group": "Ops",
-      "weight": 0,
-      "description": "API documentation for the Actuator endpoints",
-      "versionRange": "[1.5.0.RELEASE,2.0.0.M1)",
-      "versionRequirement": ">=1.5.0.RELEASE and <2.0.0.M1"
-    }
-    {
-      "id": "codecentric-spring-boot-admin-server",
-      "name": "Spring Boot Admin (Server)",
-      "group": "Dev Ops",
-      "weight": 0,
-      "description": "A community project to manage and monitor your Spring Boot applications.  Provides a UI on top of the Spring Boot Actuator endpoints.",
-      "versionRange": "1.5.9.RELEASE",
-      "versionRequirement": ">=1.5.9.RELEASE"
-    },
-    {
-      "id": "codecentric-spring-boot-admin-client",
-      "name": "Spring Boot Admin (Client)",
-      "group": "Dev Ops",
-      "weight": 0,
-      "description": "Required for your application to register with a Spring Boot Admin Server instance.",
-      "versionRange": "1.5.9.RELEASE",
-      "versionRequirement": ">=1.5.9.RELEASE"
     }
   ]
 }
