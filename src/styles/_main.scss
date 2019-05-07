@@ -472,11 +472,8 @@ label {
       &.toggle {
         svg {
           transform: rotate(90deg);
-          left: 8px;
-          top: 8px;
         }
       }
-
       &:focus {
         outline: 1px dotted $spring-outline-color;
       }
@@ -600,11 +597,32 @@ $gw: 200px;
       border-radius: $spring-radius;
 
       span {
-        vertical-align: middle;
         color: white;
-        display: inline-block;
-        font-size: 14px;
+        display: block;
         padding: 8px $spring-8points;
+        &:hover {
+          svg {
+            color: $spring-primary-color;
+          }
+        }
+
+        svg {
+          vertical-align: middle;
+          width: 10px;
+          cursor: pointer;
+          color: inherit;
+          @include transition(all $spring-transition-duration);
+        }
+        &.toggleGroupItems {
+          svg {
+            transform: rotate(90deg);
+          }
+        }
+        span.group-label {
+          font-size: 16px;
+          vertical-align: middle;
+          display: inline-block;
+        }
       }
     }
     .group-items {

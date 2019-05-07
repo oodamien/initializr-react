@@ -1,10 +1,23 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
+import { IconChevron, IconChevronRight } from './../icons'
 import CompareVersion from './../../utils/version-compare'
 import { IconPlus, IconTimes } from './../icons'
 
 class CheckboxList extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      showGroupItems: false,
+    }
+  }
+
+  toggleGroupItems = event => {
+    this.setState({
+      showGroupItems: !this.state.showGroupItems,
+    })
+  }
+
   groupByParent = arr => {
     const map = []
     const getParent = (m, name) => {
@@ -49,7 +62,13 @@ class CheckboxList extends React.Component {
         {grouped.map(group => (
           <div className='group' key={group.group}>
             <div className='group-title' key={`title${group.group}`}>
-              <span>{group.group}</span>
+              <span
+                onClick={this.toggleGroupItems}
+                className={this.state.showGroupItems ? 'toggleGroupItems' : ''}
+              >
+                <IconChevronRight />
+                <span className='group-label'>{group.group}</span>
+              </span>
             </div>
             <div className='group-items' key={`links${group.group}`}>
               {group.children.map(dep => (
