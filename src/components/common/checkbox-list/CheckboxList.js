@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { IconChevron, IconChevronRight } from './../icons'
+import { IconChevronRight } from './../icons'
 import CompareVersion from './../../utils/version-compare'
 import { IconPlus, IconTimes } from './../icons'
 
@@ -8,13 +8,19 @@ class CheckboxList extends React.Component {
   constructor() {
     super()
     this.state = {
-      showGroupItems: false,
+      showGroupItems: {},
     }
   }
 
-  toggleGroupItems = event => {
+  toggleGroupItems = groupId => {
+    const currentToggleState = this.state.showGroupItems[groupId]
+    const newToggleState = currentToggleState ? false : true
+
+    const newState = { ...this.state.showGroupItems }
+    newState[groupId] = newToggleState
+
     this.setState({
-      showGroupItems: !this.state.showGroupItems,
+      showGroupItems: newState,
     })
   }
 
@@ -63,8 +69,12 @@ class CheckboxList extends React.Component {
           <div className='group' key={group.group}>
             <div className='group-title' key={`title${group.group}`}>
               <span
-                onClick={this.toggleGroupItems}
-                className={this.state.showGroupItems ? 'toggleGroupItems' : ''}
+                onClick={() => this.toggleGroupItems(group.group)}
+                className={
+                  this.state.showGroupItems[group.group]
+                    ? 'toggleGroupItems'
+                    : ''
+                }
               >
                 <IconChevronRight />
                 <span className='group-label'>{group.group}</span>

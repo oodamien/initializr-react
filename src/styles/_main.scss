@@ -593,18 +593,13 @@ $gw: 200px;
       position: sticky;
       font-weight: bold;
       margin-top: 5px;
-      background: rgb(112, 108, 105);
+      background: rgba(112, 108, 105, 0.8);
       border-radius: $spring-radius;
 
       span {
         color: white;
         display: block;
         padding: 8px $spring-8points;
-        &:hover {
-          svg {
-            color: $spring-primary-color;
-          }
-        }
 
         svg {
           vertical-align: middle;
