@@ -504,13 +504,12 @@ label {
 
 $gw: 200px;
 .groups {
-  //margin-top: -27px;
   padding: 0px 0px 16px 0;
   .group {
     line-height: 1.4rem;
     position: relative;
     padding: 16px 0 0 0;
-    padding-left: $gw;
+    // padding-left: $gw;
     a {
       display: block;
       position: relative;
@@ -522,7 +521,6 @@ $gw: 200px;
       margin: 8px 0px;
       border-radius: 4px;
       font-size: $spring-font-size;
-      color: rgba(0, 0, 0, 0.6);
       // @include transition(all $spring-transition-duration);
       color: rgba($spring-color, 0.8);
       svg {
@@ -593,25 +591,25 @@ $gw: 200px;
       color: #f30808;
     }
     .group-title {
-      top: 40px;
+      top: 50px;
       z-index: 80;
       position: sticky;
       font-weight: bold;
-      color: rgb(109, 179, 63);
-      padding-top: $spring-8points * 2;
-      padding-left: 0;
-      float: left;
-      margin-left: -$gw;
+      margin-top: 5px;
+      background: rgb(112, 108, 105);
+      border-radius: $spring-radius;
 
       span {
-        background: rgba($spring-color, 0.4);
+        vertical-align: middle;
         color: white;
+        display: inline-block;
         font-size: 14px;
-        border-radius: $spring-radius;
-        padding: 2px $spring-8points;
+        padding: 8px $spring-8points;
       }
-      //float: left;
     }
+    .group-items {
+    }
+
     &:first-child {
       padding-top: 8px;
     }
