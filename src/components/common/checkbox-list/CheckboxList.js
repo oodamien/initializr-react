@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { IconChevronRight } from './../icons'
+
 import CompareVersion from './../../utils/version-compare'
+import { IconChevronRight } from './../icons'
 import { IconPlus, IconTimes } from './../icons'
 
 class CheckboxList extends React.Component {

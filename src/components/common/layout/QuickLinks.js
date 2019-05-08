@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { IconCaretDown, IconGithub, IconSpring, IconTwitter } from '../icons'
 
 class QuickLinks extends React.Component {
