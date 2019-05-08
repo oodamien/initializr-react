@@ -13,8 +13,8 @@ class CheckboxList extends React.Component {
   }
 
   toggleGroupItems = groupId => {
-    const currentToggleState = this.state.showGroupItems[groupId]
-    const newToggleState = currentToggleState ? false : true
+    const currentToggleStateForGroup = this.getCurrentStateForGroupId(groupId)
+    const newToggleState = currentToggleStateForGroup ? false : true
 
     const newState = { ...this.state.showGroupItems }
     newState[groupId] = newToggleState
@@ -22,6 +22,10 @@ class CheckboxList extends React.Component {
     this.setState({
       showGroupItems: newState,
     })
+  }
+
+  getCurrentStateForGroupId(groupId) {
+    return this.state.showGroupItems[groupId]
   }
 
   groupByParent = arr => {
@@ -57,6 +61,55 @@ class CheckboxList extends React.Component {
     }
   }
 
+  renderGroupItems(group, select) {
+    if (this.getCurrentStateForGroupId(group.group)) {
+      return (
+        <div className='group-items' key={`links${group.group}`}>
+          {group.children.map(dep => (
+            <a
+              href='/'
+              onClick={event => {
+                event.preventDefault()
+                if (!dep.valid) {
+                  return
+                }
+                this.onClick({
+                  target: {
+                    value: dep.id,
+                    checked: !select[dep.id] === true,
+                  },
+                })
+              }}
+              tabIndex={!dep.valid ? -1 : ''}
+              className={`${!dep.valid ? 'invalid' : ''} ${
+                select[dep.id] === true ? 'checked' : ''
+              }`}
+              key={dep.id}
+            >
+              <input
+                type='checkbox'
+                value={dep.id}
+                key={`ck${dep.id}`}
+                checked={select[dep.id] === true}
+                disabled={!dep.valid}
+                onChange={this.onClick}
+              />
+              <strong>{dep.name}</strong>
+              {dep.valid && <span>{dep.description}</span>}
+              {!dep.valid && (
+                <div className='warning' key={`warning${dep.id}`}>
+                  Requires Spring Boot {dep.versionRequirement}.
+                </div>
+              )}
+              {!select[dep.id] === true ? <IconPlus /> : <IconTimes />}
+            </a>
+          ))}
+        </div>
+      )
+    } else {
+      return <div />
+    }
+  }
   render() {
     const grouped = this.groupByParent(this.props.list)
     const select = {}
@@ -80,47 +133,7 @@ class CheckboxList extends React.Component {
                 <span className='group-label'>{group.group}</span>
               </span>
             </div>
-            <div className='group-items' key={`links${group.group}`}>
-              {group.children.map(dep => (
-                <a
-                  href='/'
-                  onClick={event => {
-                    event.preventDefault()
-                    if (!dep.valid) {
-                      return
-                    }
-                    this.onClick({
-                      target: {
-                        value: dep.id,
-                        checked: !select[dep.id] === true,
-                      },
-                    })
-                  }}
-                  tabIndex={!dep.valid ? -1 : ''}
-                  className={`${!dep.valid ? 'invalid' : ''} ${
-                    select[dep.id] === true ? 'checked' : ''
-                  }`}
-                  key={dep.id}
-                >
-                  <input
-                    type='checkbox'
-                    value={dep.id}
-                    key={`ck${dep.id}`}
-                    checked={select[dep.id] === true}
-                    disabled={!dep.valid}
-                    onChange={this.onClick}
-                  />
-                  <strong>{dep.name}</strong>
-                  {dep.valid && <span>{dep.description}</span>}
-                  {!dep.valid && (
-                    <div className='warning' key={`warning${dep.id}`}>
-                      Requires Spring Boot {dep.versionRequirement}.
-                    </div>
-                  )}
-                  {!select[dep.id] === true ? <IconPlus /> : <IconTimes />}
-                </a>
-              ))}
-            </div>
+            {this.renderGroupItems(group, select)}
           </div>
         ))}
       </div>
