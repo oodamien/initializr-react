@@ -412,7 +412,7 @@ label {
     }
   }
   .dependency-item-gray {
-    background: #f7f7f7;
+    background: white;
     border: 2px solid #f7f7f7;
     &:hover svg {
       display: none;
@@ -420,9 +420,9 @@ label {
     &.selected {
       background: #e7f1f4;
       border-color: #e7f1f4;
-      // svg {
-      //   display: block;
-      // }
+      svg {
+        display: block;
+      }
     }
     &.invalid {
       background: #ffe2e2;
