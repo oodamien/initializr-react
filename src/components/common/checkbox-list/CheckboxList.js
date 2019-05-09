@@ -29,6 +29,8 @@ class CheckboxList extends React.Component {
     return this.state.showGroupItems[groupId]
   }
 
+  getGroupsNumberOfCheckedItems(group) {}
+
   groupByParent = arr => {
     const map = []
     const getParent = (m, name) => {
@@ -52,7 +54,7 @@ class CheckboxList extends React.Component {
     return map
   }
 
-  onClick = event => {
+  onClick = (event, group) => {
     const target = event.target
     const item = this.props.list.find(item => item.id === target.value)
     if (target.checked) {
@@ -62,6 +64,25 @@ class CheckboxList extends React.Component {
     }
   }
 
+  setGroupLabel(group) {
+    let numberOfSlectedItemsForGroup = 0
+    this.props.checked.forEach(item => {
+      if (item.group === group.group) {
+        numberOfSlectedItemsForGroup++
+      }
+    })
+
+    // if ({ numberOfSlectedItemsForGroup } > 0) {
+    return (
+      <span className='group-label'>
+        {group.group} ( {numberOfSlectedItemsForGroup} selected )
+      </span>
+    )
+    // } else {
+    //   return <span className='group-label'>{group.group}</span>
+    // }
+  }
+
   renderGroupItems(group, select) {
     if (this.getCurrentStateForGroupId(group.group)) {
       return (
@@ -69,11 +90,12 @@ class CheckboxList extends React.Component {
           {group.children.map(dep => (
             <a
               href='/'
-              onClick={event => {
+              onClick={(event, group) => {
                 event.preventDefault()
                 if (!dep.valid) {
                   return
                 }
+
                 this.onClick({
                   target: {
                     value: dep.id,
@@ -131,7 +153,7 @@ class CheckboxList extends React.Component {
                 }
               >
                 <IconChevronRight />
-                <span className='group-label'>{group.group}(</span>
+                {this.setGroupLabel(group, select)}
               </span>
             </div>
             {this.renderGroupItems(group, select)}
