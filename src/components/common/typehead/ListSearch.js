@@ -62,9 +62,12 @@ class ListSearch extends React.Component {
               <div className='title' key={`item${dependency.id}`}>
                 {dependency.name} <span>{dependency.group}</span>
               </div>
-              <div className='description' key={`description{dependency.id}`}>
-                {dependency.description}
-              </div>
+              {valid && (
+                <div className='description' key={`description{dependency.id}`}>
+                  {dependency.description}
+                </div>
+              )}
+
               <IconPlus key={`icon${dependency.id}`} />
               {!valid && (
                 <div className='warning' key={`warning${dependency.id}`}>
