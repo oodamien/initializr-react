@@ -102,7 +102,6 @@ class CheckboxList extends React.Component {
                   Requires Spring Boot {dep.versionRequirement}.
                 </div>
               )}
-              {!select[dep.id] === true ? <IconPlus /> : <IconTimes />}
             </a>
           ))}
         </div>
@@ -111,6 +110,7 @@ class CheckboxList extends React.Component {
       return <div />
     }
   }
+
   render() {
     const grouped = this.groupByParent(this.props.list)
     const select = {}
@@ -131,7 +131,7 @@ class CheckboxList extends React.Component {
                 }
               >
                 <IconChevronRight />
-                <span className='group-label'>{group.group}</span>
+                <span className='group-label'>{group.group}(</span>
               </span>
             </div>
             {this.renderGroupItems(group, select)}
