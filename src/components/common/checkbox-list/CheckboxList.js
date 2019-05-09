@@ -3,7 +3,6 @@ import React from 'react'
 
 import CompareVersion from './../../utils/version-compare'
 import { IconChevronRight } from './../icons'
-import { IconPlus, IconTimes } from './../icons'
 
 class CheckboxList extends React.Component {
   constructor() {
@@ -29,8 +28,6 @@ class CheckboxList extends React.Component {
     return this.state.showGroupItems[groupId]
   }
 
-  getGroupsNumberOfCheckedItems(group) {}
-
   groupByParent = arr => {
     const map = []
     const getParent = (m, name) => {
@@ -54,7 +51,7 @@ class CheckboxList extends React.Component {
     return map
   }
 
-  onClick = (event, group) => {
+  onClick = event => {
     const target = event.target
     const item = this.props.list.find(item => item.id === target.value)
     if (target.checked) {
@@ -71,16 +68,15 @@ class CheckboxList extends React.Component {
         numberOfSlectedItemsForGroup++
       }
     })
-
-    // if ({ numberOfSlectedItemsForGroup } > 0) {
-    return (
-      <span className='group-label'>
-        {group.group} ( {numberOfSlectedItemsForGroup} selected )
-      </span>
-    )
-    // } else {
-    //   return <span className='group-label'>{group.group}</span>
-    // }
+    if (numberOfSlectedItemsForGroup > 0) {
+      return (
+        <span className='group-label'>
+          {group.group} ( {numberOfSlectedItemsForGroup} selected )
+        </span>
+      )
+    } else {
+      return <span className='group-label'>{group.group}</span>
+    }
   }
 
   renderGroupItems(group, select) {
@@ -90,12 +86,11 @@ class CheckboxList extends React.Component {
           {group.children.map(dep => (
             <a
               href='/'
-              onClick={(event, group) => {
+              onClick={event => {
                 event.preventDefault()
                 if (!dep.valid) {
                   return
                 }
-
                 this.onClick({
                   target: {
                     value: dep.id,
@@ -153,7 +148,7 @@ class CheckboxList extends React.Component {
                 }
               >
                 <IconChevronRight />
-                {this.setGroupLabel(group, select)}
+                {this.setGroupLabel(group)}
               </span>
             </div>
             {this.renderGroupItems(group, select)}
