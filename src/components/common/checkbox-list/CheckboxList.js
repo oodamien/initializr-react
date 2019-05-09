@@ -148,6 +148,7 @@ class CheckboxList extends React.Component {
                 }
               >
                 <IconChevronRight />
+
                 {this.setGroupLabel(group)}
               </span>
             </div>

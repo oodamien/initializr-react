@@ -17,17 +17,29 @@ class ListSearch extends React.Component {
     this.props.onSelectedChanged(-1)
   }
 
+  isValid(dependency) {
+    return dependency.versionRange
+      ? CompareVersion(this.props.boot, dependency.versionRange)
+      : true
+  }
+
   render() {
     let dependencies = this.props.dependencies
-    if (dependencies.length > 5) {
-      dependencies = dependencies.slice(0, 5)
-    }
+
+    dependencies.sort((a, b) => {
+      if (this.isValid(a) && !this.isValid(b)) {
+        return -1
+      }
+      if (!this.isValid(a) && this.isValid(b)) {
+        return 1
+      }
+      return 0
+    })
+
     return (
       <div className='dependencies-list'>
         {dependencies.map((dependency, index) => {
-          const valid = dependency.versionRange
-            ? CompareVersion(this.props.boot, dependency.versionRange)
-            : true
+          const valid = this.isValid(dependency)
           return (
             <div
               className={`dependency-item dependency-item-gray ${
