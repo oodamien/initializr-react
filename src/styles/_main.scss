@@ -437,7 +437,7 @@ label {
 
 .more {
   line-height: 16px;
-  padding-top: 8px;
+  padding-top: 4px;
   margin-top: 4px;
   div.wrap {
     border-bottom: 3px solid #ebebeb;
@@ -453,7 +453,6 @@ label {
       color: $spring-color;
       text-decoration: none;
       border-radius: $spring-radius;
-      // outline: 1px dotted white;
       @include transition(all $spring-transition-duration);
       &:hover {
         color: $spring-color;
@@ -505,17 +504,16 @@ $gw: 200px;
   .group {
     line-height: 1.4rem;
     position: relative;
-    padding: 16px 0 0 0;
-    // padding-left: $gw;
+    padding: 0px 0 0 0;
+
     a {
       display: block;
       position: relative;
       text-decoration: none;
-      // border: 2px solid #f7f7f7;
-      // background: #f7f7f7;
+
       cursor: pointer;
-      padding: 5px 8px 5px 8px;
-      margin: 8px 0px;
+      padding: 0px 8px 5px 8px;
+      margin: 2px 0px;
       border-radius: 4px;
       font-size: $spring-font-size;
       color: rgba($spring-color, 0.8);
@@ -547,15 +545,12 @@ $gw: 200px;
         background: #e7f1f4;
         border-color: #e7f1f4;
         color: $spring-color;
-        svg {
-          // display: block;
-        }
+
         span {
           color: rgba($spring-color, 0.8);
         }
       }
       &.invalid {
-        // background: #f7f7f7;
         cursor: not-allowed;
         &:hover {
           border: 2px solid #f7f7f7;
@@ -564,25 +559,15 @@ $gw: 200px;
           }
         }
       }
-
       &.checked {
         color: $spring-color;
         background: #daeccf;
-        // border-color: lighten($spring-border-color, 4);
-        padding: 5px 8px 10px 8px;
         span {
           color: rgba($spring-color, 0.8);
         }
-        &:hover {
-          // border-color: $spring-border-color;
-        }
-        &:hover {
-          // border: 2px solid lighten($spring-border-color, 4);
-        }
       }
-
       &:focus {
-        // outline: 1px dotted $spring-outline-color;
+        outline: 1px dotted $spring-outline-color;
       }
     }
     .warning {
@@ -602,7 +587,7 @@ $gw: 200px;
       span {
         color: $spring-primary-color;
         display: block;
-        padding: 4px 8px;
+        padding: 4px 0px;
 
         svg {
           vertical-align: middle;
@@ -620,6 +605,7 @@ $gw: 200px;
           font-size: 16px;
           vertical-align: middle;
           display: inline-block;
+          padding-left: 6px;
         }
       }
     }
@@ -628,12 +614,12 @@ $gw: 200px;
       padding-top: 8px;
     }
   }
-}
-.group-items {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(85, 0.75fr));
-  grid-gap: 3px 10px;
+  div.group-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(85, 0.75fr));
+    grid-gap: 3px 10px;
+  }
 }
 
 .search-label {
