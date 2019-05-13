@@ -128,6 +128,17 @@ class CheckboxList extends React.Component {
     }
   }
 
+  checkIfKeyWasEnterOrSpaceAndToggle = (event, groupId) => {
+    event.stopPropagation()
+    var keyPressed = event.key
+
+    console.log('Code of key pressed: ' + keyPressed + ' - group: ' + groupId)
+    if (keyPressed === 'Enter' || keyPressed === ' ') {
+      event.preventDefault()
+      this.toggleGroupItems(groupId)
+    }
+  }
+
   render() {
     const grouped = this.groupByParent(this.props.list)
     const select = {}
@@ -145,6 +156,10 @@ class CheckboxList extends React.Component {
                   this.state.showGroupItems[group.group]
                     ? 'toggleGroupItems'
                     : ''
+                }
+                tabIndex={0}
+                onKeyDown={event =>
+                  this.checkIfKeyWasEnterOrSpaceAndToggle(event, group.group)
                 }
               >
                 <IconChevronRight />

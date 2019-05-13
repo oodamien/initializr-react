@@ -576,7 +576,7 @@ $gw: 200px;
     }
     .group-title {
       top: 30px;
-      padding-top: 25px;
+      padding-top: 10px;
       z-index: 80;
       background-color: white;
       position: sticky;
@@ -586,6 +586,7 @@ $gw: 200px;
       :hover {
         cursor: pointer;
       }
+
       span {
         color: $spring-primary-color;
         display: block;
