@@ -592,6 +592,9 @@ $gw: 200px;
         display: block;
         padding: 4px 0px 4px 2px;
 
+        &:focus {
+          outline: 1px dotted $spring-outline-color;
+        }
         svg {
           vertical-align: middle;
           width: 10px;
