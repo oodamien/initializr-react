@@ -631,6 +631,12 @@ $gw: 200px;
   padding-bottom: 8px;
 }
 
+.searchWarning {
+  font-weight: bold;
+  font-style: italic;
+  padding-left: 8px;
+}
+
 .sticky-label {
   padding-top: $spring-8points / 2;
   position: sticky;

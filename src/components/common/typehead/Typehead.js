@@ -99,6 +99,16 @@ class Typehead extends React.Component {
     this.setState({ selected: index })
   }
 
+  showWarningForSearchReturn = dependencies => {
+    if (dependencies.length > 5) {
+      return (
+        <label className='searchWarning'>
+          More than 5 results found. Refine your search if necessary.
+        </label>
+      )
+    }
+  }
+
   render() {
     let dependencies = []
     if (this.state.search) {
@@ -131,6 +141,7 @@ class Typehead extends React.Component {
           selected={this.state.selected}
           onSelectedChanged={this.onSelectedChanged}
         />
+        {this.showWarningForSearchReturn(dependencies)}
       </>
     )
   }

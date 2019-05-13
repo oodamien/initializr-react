@@ -23,9 +23,7 @@ class ListSearch extends React.Component {
       : true
   }
 
-  render() {
-    let dependencies = this.props.dependencies
-
+  sortDependenciesByValidThenInvalid(dependencies) {
     dependencies.sort((a, b) => {
       if (this.isValid(a) && !this.isValid(b)) {
         return -1
@@ -35,6 +33,15 @@ class ListSearch extends React.Component {
       }
       return 0
     })
+  }
+
+  render() {
+    let dependencies = this.props.dependencies
+    if (dependencies.length > 5) {
+      dependencies = dependencies.slice(0, 5)
+    }
+
+    this.sortDependenciesByValidThenInvalid(dependencies)
 
     return (
       <div className='dependencies-list'>
