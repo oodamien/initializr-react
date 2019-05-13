@@ -575,8 +575,10 @@ $gw: 200px;
       color: #f30808;
     }
     .group-title {
-      top: 50px;
+      top: 30px;
+      padding-top: 25px;
       z-index: 80;
+      background-color: white;
       position: sticky;
       font-weight: bold;
       margin-top: 5px;
@@ -587,7 +589,7 @@ $gw: 200px;
       span {
         color: $spring-primary-color;
         display: block;
-        padding: 4px 0px;
+        padding: 4px 0px 4px 2px;
 
         svg {
           vertical-align: middle;
