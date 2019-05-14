@@ -2,32 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import CompareVersion from './../../utils/version-compare'
-import { IconChevronRight } from './../icons'
+import DependencyGroup from './DependencyGroup'
 
 class CheckboxList extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      showGroupItems: {},
-    }
-  }
-
-  toggleGroupItems = groupId => {
-    const currentToggleStateForGroup = this.getCurrentStateForGroupId(groupId)
-    const newToggleState = currentToggleStateForGroup ? false : true
-
-    const newState = { ...this.state.showGroupItems }
-    newState[groupId] = newToggleState
-
-    this.setState({
-      showGroupItems: newState,
-    })
-  }
-
-  getCurrentStateForGroupId(groupId) {
-    return this.state.showGroupItems[groupId]
-  }
-
   groupByParent = list => {
     const map = []
     const getParent = (map, name) => {
@@ -51,122 +28,22 @@ class CheckboxList extends React.Component {
     return map
   }
 
-  onClick = event => {
-    const target = event.target
-    const item = this.props.list.find(item => item.id === target.value)
-    if (target.checked) {
-      this.props.add(item)
-    } else {
-      this.props.remove(item)
-    }
-  }
-
-  setGroupLabel(group) {
-    let numberOfSlectedItemsForGroup = 0
-    this.props.checked.forEach(item => {
-      if (item.group === group.group) {
-        numberOfSlectedItemsForGroup++
-      }
-    })
-    if (numberOfSlectedItemsForGroup > 0) {
-      return (
-        <span className='group-label'>
-          {group.group} ( {numberOfSlectedItemsForGroup} selected )
-        </span>
-      )
-    } else {
-      return <span className='group-label'>{group.group}</span>
-    }
-  }
-
-  renderGroupItems(group, select) {
-    if (this.getCurrentStateForGroupId(group.group)) {
-      return (
-        <div className='group-items' key={`links${group.group}`}>
-          {group.children.map(dep => (
-            <a
-              href='/'
-              onClick={event => {
-                event.preventDefault()
-                if (!dep.valid) {
-                  return
-                }
-                this.onClick({
-                  target: {
-                    value: dep.id,
-                    checked: !select[dep.id] === true,
-                  },
-                })
-              }}
-              tabIndex={!dep.valid ? -1 : ''}
-              className={`${!dep.valid ? 'invalid' : ''} ${
-                select[dep.id] === true ? 'checked' : ''
-              }`}
-              key={dep.id}
-            >
-              <input
-                type='checkbox'
-                value={dep.id}
-                key={`ck${dep.id}`}
-                checked={select[dep.id] === true}
-                disabled={!dep.valid}
-                onChange={this.onClick}
-              />
-              <strong>{dep.name}</strong>
-              {dep.valid && <span>{dep.description}</span>}
-              {!dep.valid && (
-                <div className='warning' key={`warning${dep.id}`}>
-                  Requires Spring Boot {dep.versionRequirement}.
-                </div>
-              )}
-            </a>
-          ))}
-        </div>
-      )
-    } else {
-      return <div />
-    }
-  }
-
-  checkIfKeyWasEnterOrSpaceAndToggle = (event, groupId) => {
-    event.stopPropagation()
-    var keyPressed = event.key
-    if (keyPressed === 'Enter' || keyPressed === ' ') {
-      event.preventDefault()
-      this.toggleGroupItems(groupId)
-    }
-  }
-
   render() {
-    const grouped = this.groupByParent(this.props.list)
+    const groups = this.groupByParent(this.props.list)
     const select = {}
     this.props.checked.forEach(item => {
       select[item.id] = true
     })
     return (
       <div className='groups'>
-        {grouped.map(group => (
-          <div className='group' key={group.group}>
-            <div className='group-title' key={`title${group.group}`}>
-              <span
-                onClick={() => this.toggleGroupItems(group.group)}
-                className={
-                  this.state.showGroupItems[group.group]
-                    ? 'toggleGroupItems'
-                    : ''
-                }
-                tabIndex={0}
-                onKeyDown={event =>
-                  this.checkIfKeyWasEnterOrSpaceAndToggle(event, group.group)
-                }
-              >
-                <IconChevronRight />
-
-                {this.setGroupLabel(group)}
-              </span>
-            </div>
-            {this.renderGroupItems(group, select)}
-          </div>
+        {groups.map(group => (
+          <DependencyGroup
+            key={group.group}
+            dependencyGroup={group}
+            addDependency={this.props.add}
+            removeDependency={this.props.remove}
+            selectedDependencies={select}
+          />
         ))}
       </div>
     )
