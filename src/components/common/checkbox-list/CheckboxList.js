@@ -131,8 +131,6 @@ class CheckboxList extends React.Component {
   checkIfKeyWasEnterOrSpaceAndToggle = (event, groupId) => {
     event.stopPropagation()
     var keyPressed = event.key
-
-    console.log('Code of key pressed: ' + keyPressed + ' - group: ' + groupId)
     if (keyPressed === 'Enter' || keyPressed === ' ') {
       event.preventDefault()
       this.toggleGroupItems(groupId)
