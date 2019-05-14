@@ -37,7 +37,7 @@ class QuickLinks extends React.Component {
       <ul className='quick-links'>
         <li>
           <a
-            href='https://github.com/spring-io/initializr'
+            href='https://github.com/spring-io/start.spring.io'
             rel='noreferrer noopener'
             target='_blank'
             tabIndex='-1'
