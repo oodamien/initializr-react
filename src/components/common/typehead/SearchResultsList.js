@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import CompareVersion from './../../utils/version-compare'
-import { IconPlus } from './../icons'
+import CompareVersion from '../../utils/version-compare'
+import { IconPlus } from '../icons'
 
-class ListSearch extends React.Component {
+class SearchResultsList extends React.Component {
   onClick = dependency => {
     this.props.onAdded(dependency)
   }
@@ -89,7 +89,7 @@ class ListSearch extends React.Component {
   }
 }
 
-ListSearch.propTypes = {
+SearchResultsList.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -106,4 +106,4 @@ ListSearch.propTypes = {
   onSelectedChanged: PropTypes.func.isRequired,
 }
 
-export default ListSearch
+export default SearchResultsList

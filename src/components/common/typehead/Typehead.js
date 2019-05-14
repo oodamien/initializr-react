@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import CompareVersion from './../../utils/version-compare'
-import ListSearch from './ListSearch'
+import SearchResultsList from './SearchResultsList'
 
 class Typehead extends React.Component {
   search = null
@@ -134,7 +134,7 @@ class Typehead extends React.Component {
             this.onKeyPress(e, dependencies)
           }}
         />
-        <ListSearch
+        <SearchResultsList
           boot={this.props.boot}
           dependencies={dependencies}
           onAdded={this.onAdded}

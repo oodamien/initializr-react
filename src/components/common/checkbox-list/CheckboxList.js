@@ -28,13 +28,13 @@ class CheckboxList extends React.Component {
     return this.state.showGroupItems[groupId]
   }
 
-  groupByParent = arr => {
+  groupByParent = list => {
     const map = []
-    const getParent = (m, name) => {
-      return m.find(item => item.group === name)
+    const getParent = (map, name) => {
+      return map.find(item => item.group === name)
     }
-    for (var i = 0; i < arr.length; i++) {
-      const dep = arr[i]
+    for (var i = 0; i < list.length; i++) {
+      const dep = list[i]
       let parent = getParent(map, dep.group)
       if (!parent) {
         parent = {
