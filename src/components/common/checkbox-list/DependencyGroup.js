@@ -6,24 +6,14 @@ class DependencyGroup extends React.Component {
   constructor() {
     super()
     this.state = {
-      showGroupItems: {},
+      showGroupItems: false,
     }
   }
 
-  toggleGroupItems = groupId => {
-    const currentToggleStateForGroup = this.getCurrentStateForGroupId(groupId)
-    const newToggleState = currentToggleStateForGroup ? false : true
-
-    const newState = { ...this.state.showGroupItems }
-    newState[groupId] = newToggleState
-
+  toggleGroupItems() {
     this.setState({
-      showGroupItems: newState,
+      showGroupItems: !this.state.showGroupItems,
     })
-  }
-
-  getCurrentStateForGroupId(groupId) {
-    return this.state.showGroupItems[groupId]
   }
 
   checkIfKeyWasEnterOrSpaceAndToggle = (event, groupId) => {
@@ -46,8 +36,8 @@ class DependencyGroup extends React.Component {
       this.props.removeDependency(item)
     }
   }
-  renderGroupItems(group, select) {
-    if (this.getCurrentStateForGroupId(group.group)) {
+  renderGroupItems(group, selectedDependencies) {
+    if (this.state.showGroupItems) {
       return (
         <div className='group-items' key={`links${group.group}`}>
           {group.children.map(dep => (
@@ -61,13 +51,13 @@ class DependencyGroup extends React.Component {
                 this.onClick({
                   target: {
                     value: dep.id,
-                    checked: !select[dep.id] === true,
+                    checked: !selectedDependencies[dep.id] === true,
                   },
                 })
               }}
               tabIndex={!dep.valid ? -1 : ''}
               className={`${!dep.valid ? 'invalid' : ''} ${
-                select[dep.id] === true ? 'checked' : ''
+                selectedDependencies[dep.id] === true ? 'checked' : ''
               }`}
               key={dep.id}
             >
@@ -75,7 +65,7 @@ class DependencyGroup extends React.Component {
                 type='checkbox'
                 value={dep.id}
                 key={`ck${dep.id}`}
-                checked={select[dep.id] === true}
+                checked={selectedDependencies[dep.id] === true}
                 disabled={!dep.valid}
                 onChange={this.onClick}
               />
@@ -115,16 +105,13 @@ class DependencyGroup extends React.Component {
 
   render() {
     const group = this.props.dependencyGroup
-    console.log(group)
-    const select = this.props.select
+    const selectedDependencies = this.props.selectedDependencies
     return (
       <div className='group'>
         <div className='group-title'>
           <span
-            onClick={() => this.toggleGroupItems(group.group)}
-            className={
-              this.state.showGroupItems[group.group] ? 'toggleGroupItems' : ''
-            }
+            onClick={() => this.toggleGroupItems()}
+            className={this.state.showGroupItems ? 'toggleGroupItems' : ''}
             tabIndex={0}
             onKeyDown={event =>
               this.checkIfKeyWasEnterOrSpaceAndToggle(event, group.group)
@@ -135,7 +122,7 @@ class DependencyGroup extends React.Component {
             {this.setGroupLabel(group)}
           </span>
         </div>
-        {this.renderGroupItems(group, this.props.selectedDependencies)}
+        {this.renderGroupItems(group, selectedDependencies)}
       </div>
     )
   }
