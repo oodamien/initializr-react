@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 class DependencyItem extends React.Component {
   onClick = event => {
     const target = event.target
-
     if (target.checked) {
       this.props.addDependency(this.props.dep)
     } else {
@@ -14,7 +14,6 @@ class DependencyItem extends React.Component {
   render() {
     const dep = this.props.dep
     const selectedDependencies = this.props.selectedDependencies
-
     return (
       <a
         href='/'
@@ -54,6 +53,23 @@ class DependencyItem extends React.Component {
       </a>
     )
   }
+}
+
+DependencyItem.propTypes = {
+  dep: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    group: PropTypes.string.isRequired,
+    valid: PropTypes.bool.isRequired,
+    versionRange: PropTypes.string,
+    versionRequirement: PropTypes.string,
+    keywords: PropTypes.string,
+    weight: PropTypes.number,
+  }),
+  addDependency: PropTypes.func.isRequired,
+  removeDependency: PropTypes.func.isRequired,
+  selectedDependencies: PropTypes.object,
 }
 
 export default DependencyItem

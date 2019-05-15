@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import DependencyItem from './DependencyItem'
@@ -47,6 +48,7 @@ class DependencyGroup extends React.Component {
   render() {
     const group = this.props.dependencyGroup
     const selectedDependencies = this.props.selectedDependencies
+
     return (
       <div className='group'>
         <div className='group-title'>
@@ -79,6 +81,28 @@ class DependencyGroup extends React.Component {
       </div>
     )
   }
+}
+
+DependencyGroup.propTypes = {
+  addDependency: PropTypes.func.isRequired,
+  removeDependency: PropTypes.func.isRequired,
+  selectedDependencies: PropTypes.object,
+  group: PropTypes.shape({
+    group: PropTypes.string.isRequired,
+    children: PropTypes.arrayOf(
+      PropTypes.shape({
+        description: PropTypes.string.isRequired,
+        group: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
+        keywords: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        valid: PropTypes.bool.isRequired,
+        versionRange: PropTypes.string,
+        versionRequirement: PropTypes.string,
+        weight: PropTypes.number,
+      })
+    ),
+  }),
 }
 
 export default DependencyGroup

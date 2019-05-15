@@ -90,12 +90,10 @@ class IndexPage extends React.Component {
   componentDidMount() {}
 
   dependencyAdd = dependency => {
-    console.log('Add: ' + dependency.id)
     this.setState({ dependencies: [...this.state.dependencies, dependency] })
   }
 
   dependencyRemove = dependency => {
-    console.log('Remove: ' + dependency.id)
     this.setState({
       dependencies: this.state.dependencies.filter(
         item => dependency.name !== item.name
