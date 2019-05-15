@@ -1,5 +1,6 @@
 import React from 'react'
 
+import DependencyItem from './DependencyItem'
 import { IconChevronRight } from './../icons'
 
 class DependencyGroup extends React.Component {
@@ -22,66 +23,6 @@ class DependencyGroup extends React.Component {
     if (keyPressed === 'Enter' || keyPressed === ' ') {
       event.preventDefault()
       this.toggleGroupItems(groupId)
-    }
-  }
-
-  onClick = event => {
-    const target = event.target
-    const item = this.props.dependencyGroup.children.find(
-      item => item.id === target.value
-    )
-    if (target.checked) {
-      this.props.addDependency(item)
-    } else {
-      this.props.removeDependency(item)
-    }
-  }
-  renderGroupItems(group, selectedDependencies) {
-    if (this.state.showGroupItems) {
-      return (
-        <div className='group-items' key={`links${group.group}`}>
-          {group.children.map(dep => (
-            <a
-              href='/'
-              onClick={event => {
-                event.preventDefault()
-                if (!dep.valid) {
-                  return
-                }
-                this.onClick({
-                  target: {
-                    value: dep.id,
-                    checked: !selectedDependencies[dep.id] === true,
-                  },
-                })
-              }}
-              tabIndex={!dep.valid ? -1 : ''}
-              className={`${!dep.valid ? 'invalid' : ''} ${
-                selectedDependencies[dep.id] === true ? 'checked' : ''
-              }`}
-              key={dep.id}
-            >
-              <input
-                type='checkbox'
-                value={dep.id}
-                key={`ck${dep.id}`}
-                checked={selectedDependencies[dep.id] === true}
-                disabled={!dep.valid}
-                onChange={this.onClick}
-              />
-              <strong>{dep.name}</strong>
-              {dep.valid && <span>{dep.description}</span>}
-              {!dep.valid && (
-                <div className='warning' key={`warning${dep.id}`}>
-                  Requires Spring Boot {dep.versionRequirement}.
-                </div>
-              )}
-            </a>
-          ))}
-        </div>
-      )
-    } else {
-      return <div />
     }
   }
 
@@ -122,7 +63,19 @@ class DependencyGroup extends React.Component {
             {this.setGroupLabel(group)}
           </span>
         </div>
-        {this.renderGroupItems(group, selectedDependencies)}
+        {this.state.showGroupItems && (
+          <div className='group-items' key={`links${group.group}`}>
+            {group.children.map(dep => (
+              <DependencyItem
+                key={dep.id}
+                dep={dep}
+                selectedDependencies={selectedDependencies}
+                addDependency={this.props.addDependency}
+                removeDependency={this.props.removeDependency}
+              />
+            ))}
+          </div>
+        )}
       </div>
     )
   }
