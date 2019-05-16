@@ -8,7 +8,7 @@ class DependencyGroup extends React.Component {
   constructor() {
     super()
     this.state = {
-      showGroupItems: false,
+      showGroupItems: true,
     }
   }
 
@@ -24,24 +24,6 @@ class DependencyGroup extends React.Component {
     if (keyPressed === 'Enter' || keyPressed === ' ') {
       event.preventDefault()
       this.toggleGroupItems(groupId)
-    }
-  }
-
-  setGroupLabel(group) {
-    let numberOfSlectedItemsForGroup = 0
-    group.children.forEach(dependency => {
-      if (this.props.selectedDependencies[dependency.id] === true) {
-        numberOfSlectedItemsForGroup++
-      }
-    })
-    if (numberOfSlectedItemsForGroup > 0) {
-      return (
-        <span className='group-label'>
-          {group.group} ( {numberOfSlectedItemsForGroup} selected )
-        </span>
-      )
-    } else {
-      return <span className='group-label'>{group.group}</span>
     }
   }
 
@@ -62,7 +44,7 @@ class DependencyGroup extends React.Component {
           >
             <IconChevronRight />
 
-            {this.setGroupLabel(group)}
+            <span className='group-label'>{group.group}</span>
           </span>
         </div>
         {this.state.showGroupItems && (
