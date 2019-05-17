@@ -424,7 +424,11 @@ class IndexPage extends React.Component {
               </div>
               <div className='right nopadding'>
                 <div className='submit'>
-                  <button className='button primary' type='submit'>
+                  <button
+                    className='button primary'
+                    type='submit'
+                    id='generate-project'
+                  >
                     Generate the project - ⌘ + ⏎
                   </button>
                 </div>

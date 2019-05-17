@@ -103,7 +103,7 @@ class QuickLinks extends React.Component {
               </li>
               <li>
                 <a
-                  id='ql-help-blog'
+                  id='ql-help-spring-blog'
                   target='_blank'
                   rel='noopener noreferrer'
                   tabIndex='-1'
