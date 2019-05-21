@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import CompareVersion from './../../utils/version-compare'
-import ListSearch from './ListSearch'
+import SearchResultsList from './SearchResultsList'
 
 class Typehead extends React.Component {
   search = null
@@ -99,6 +99,16 @@ class Typehead extends React.Component {
     this.setState({ selected: index })
   }
 
+  showWarningForSearchReturn = dependencies => {
+    if (dependencies.length > 5) {
+      return (
+        <label className='searchWarning'>
+          More than 5 results found. Refine your search if necessary.
+        </label>
+      )
+    }
+  }
+
   render() {
     let dependencies = []
     if (this.state.search) {
@@ -124,13 +134,14 @@ class Typehead extends React.Component {
             this.onKeyPress(e, dependencies)
           }}
         />
-        <ListSearch
+        <SearchResultsList
           boot={this.props.boot}
           dependencies={dependencies}
           onAdded={this.onAdded}
           selected={this.state.selected}
           onSelectedChanged={this.onSelectedChanged}
         />
+        {this.showWarningForSearchReturn(dependencies)}
       </>
     )
   }

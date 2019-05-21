@@ -1,23 +1,23 @@
 import FileSaver from 'file-saver'
 import React from 'react'
 import get from 'lodash.get'
+import queryString from 'query-string'
 import querystring from 'querystring'
 import set from 'lodash.set'
+import { GlobalHotKeys } from 'react-hotkeys'
+import { ToastContainer, toast } from 'react-toastify'
 import { graphql } from 'gatsby'
-import queryString from 'query-string'
 
 import { CheckboxList } from '../components/common/checkbox-list'
 import { Footer, Layout } from '../components/common/layout'
+import {
+  IconChevronRight,
+  IconList,
+  IconSearch,
+} from '../components/common/icons'
 import { List, RadioGroup } from '../components/common/form'
 import { Meta } from '../components/common/meta'
 import { Typehead } from '../components/common/typehead'
-import { ToastContainer, toast } from 'react-toastify'
-import { GlobalHotKeys } from 'react-hotkeys'
-import {
-  IconChevronRight,
-  IconSearch,
-  IconList,
-} from '../components/common/icons'
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -90,12 +90,10 @@ class IndexPage extends React.Component {
   componentDidMount() {}
 
   dependencyAdd = dependency => {
-    console.log('Add: ' + dependency.id)
     this.setState({ dependencies: [...this.state.dependencies, dependency] })
   }
 
   dependencyRemove = dependency => {
-    console.log('Remove: ' + dependency.id)
     this.setState({
       dependencies: this.state.dependencies.filter(
         item => dependency.name !== item.name
@@ -426,7 +424,11 @@ class IndexPage extends React.Component {
               </div>
               <div className='right nopadding'>
                 <div className='submit'>
-                  <button className='button primary' type='submit'>
+                  <button
+                    className='button primary'
+                    type='submit'
+                    id='generate-project'
+                  >
                     Generate the project - ⌘ + ⏎
                   </button>
                 </div>

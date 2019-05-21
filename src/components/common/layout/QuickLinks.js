@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { IconCaretDown, IconGithub, IconSpring, IconTwitter } from '../icons'
 
 class QuickLinks extends React.Component {
@@ -36,7 +37,7 @@ class QuickLinks extends React.Component {
       <ul className='quick-links'>
         <li>
           <a
-            href='https://github.com/spring-io/initializr'
+            href='https://github.com/spring-io/start.spring.io'
             rel='noreferrer noopener'
             target='_blank'
             tabIndex='-1'
@@ -98,6 +99,34 @@ class QuickLinks extends React.Component {
                   }}
                 >
                   Spring Guides
+                </a>
+              </li>
+              <li>
+                <a
+                  id='ql-help-spring-blog'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  tabIndex='-1'
+                  href='https://spring.io/blog'
+                  onClick={() => {
+                    this.setState({ help: false })
+                  }}
+                >
+                  What's New With Spring
+                </a>
+              </li>
+              <li>
+                <a
+                  id='ql-help-migration'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  tabIndex='-1'
+                  href='https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Migration-Guide'
+                  onClick={() => {
+                    this.setState({ help: false })
+                  }}
+                >
+                  Migrate from 1.5 => 2.0
                 </a>
               </li>
             </ul>
