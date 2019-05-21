@@ -649,7 +649,7 @@
       "name": "Cloud Contract Verifier",
       "group": "Spring Cloud Tools",
       "weight": 0,
-      "description": "Moves TDD to the level of software architecture by enabling Consumer Driven Contract (CDC) development of JVM-based applications."
+      "description": "Moves TDD to the level of software architecture by enabling Consumer Driven Contract (CDC) development."
     },
     {
       "id": "cloud-contract-stub-runner",
@@ -670,7 +670,7 @@
       "name": "Config Server",
       "group": "Spring Cloud Config",
       "weight": 0,
-      "description": "Central management for configuration via a git or svn backend"
+      "description": "Central management for configuration via Git, SVN, or HashiCorp Vault"
     },
     {
       "id": "cloud-starter-vault-config",
@@ -697,7 +697,7 @@
     },
     {
       "id": "cloud-eureka",
-      "name": "Eureka Discovery",
+      "name": "Eureka Discovery Client",
       "group": "Spring Cloud Discovery",
       "weight": 100,
       "description": "Service discovery using Spring Cloud Netflix and Eureka"
@@ -758,7 +758,7 @@
       "name": "OpenFeign",
       "group": "Spring Cloud Routing",
       "weight": 0,
-      "description": "Declarative REST Client: Feign creates a dynamic implementation of an interface decorated with JAX-RS or Spring MVC annotations"
+      "description": "Declarative REST Client: OpenFeign creates a dynamic implementation of an interface decorated with JAX-RS or Spring MVC annotations"
     },
     {
       "id": "cloud-hystrix",
